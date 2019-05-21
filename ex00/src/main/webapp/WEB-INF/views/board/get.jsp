@@ -14,7 +14,19 @@
 <script type="text/javascript" src="/resources/js/reply.js"></script>
 <script type="text/javascript">
 $(document).ready(function () {
-	console.log(replyService);	
+	console.log("=====================");
+	console.log("JS TEST");
+	
+	var bnoValue = '<c:out value="${board.bno}"/>';
+	alert(bnoValue);
+	replyService.add(
+		{reply:"JS Test", replyer:"tester",bno:bnoValue},
+			function (result) {
+				alert(result);
+			}
+			
+	);
+	
 });
 
 </script>
