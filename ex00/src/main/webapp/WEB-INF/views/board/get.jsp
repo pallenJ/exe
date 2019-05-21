@@ -11,6 +11,14 @@
 </head>
 <body>
 
+<script type="text/javascript" src="/resources/js/reply.js"></script>
+<script type="text/javascript">
+$(document).ready(function () {
+	console.log(replyService);	
+});
+
+</script>
+
 <div class="row">
 			<div class="col-lg-12">
 				<h1 class="page-header">Board Read</h1>
@@ -59,6 +67,7 @@
 				
 				<script type="text/javascript">
 					$(document).ready(function () {
+						
 						var openForm = $("#operForm")
 						$("button[data-oper='modify']").click(function(e) {
 							openForm.attr("action", "/board/modify").submit();
