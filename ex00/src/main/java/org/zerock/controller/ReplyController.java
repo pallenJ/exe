@@ -24,7 +24,7 @@ import lombok.extern.log4j.Log4j;
 @Log4j
 @RestController // restcon 으로 작성, restlet로 테스트
 @RequestMapping("/replies/*")
-public class ReplyController {
+public class ReplyController { 
 
 	@Setter(onMethod_ = { @Autowired })
 	private ReplyService service;
