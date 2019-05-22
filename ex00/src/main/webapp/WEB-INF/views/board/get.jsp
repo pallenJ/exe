@@ -18,15 +18,23 @@ $(document).ready(function () {
 	console.log("JS TEST");
 	
 	var bnoValue = '<c:out value="${board.bno}"/>';
-	alert(bnoValue);
-	replyService.add(
+	//alert(bnoValue);
+	/* replyService.add(
 		{reply:"JS Test", replyer:"tester",bno:bnoValue},
 			function (result) {
 				alert(result);
 			}
 			
 	);
-	
+	 */
+	 
+	 replyService.getList({bno:bnoValue,page:1}, function(list) {
+	 	for (var i = 0,len = list.length||0; i < len; i++) {
+			console.log();
+			
+		}
+	 });
+	 
 });
 
 </script>

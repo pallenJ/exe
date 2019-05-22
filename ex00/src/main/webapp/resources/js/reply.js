@@ -25,6 +25,29 @@ var replyService = (function () {
 			
 		}
 	
-		return {add : add};
+		function getList(param , callback, error) {
+			
+			var bno  = param.bno;
+			var page = param.page || 1;
+			
+			$.getJSON("/replies/pages/"+bno+"/"+page+".json", 
+		    	function(data) {
+					if(callback){
+					callback(data);
+					}
+				
+		    	}).fail(function(xhr,status,err) {
+		    		if(err){
+		    		error();
+		    		}
+		    	});
+			
+		}
+		
+		
+		return {
+		add : add,
+		getList : getList
+		};
 	
 	})();

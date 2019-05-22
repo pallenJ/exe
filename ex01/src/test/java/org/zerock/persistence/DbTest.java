@@ -31,6 +31,7 @@ public class DbTest {
 	  private SqlSessionFactory sqlSessionFactory;
 	  @Setter(onMethod_ = {@Autowired})
 	  private TimeMapper mapper;
+	  
 	  @Test
 	  public void test() {
 		  
