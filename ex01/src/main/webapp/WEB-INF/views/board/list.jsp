@@ -46,7 +46,7 @@
 							<form id = 'searchForm' action="/board/list" method='get'>
 								<select name='type'>
 									<!-- <option value="">선택하세요</option> -->								
-									<option value="TWC" selected="selected">전체</option>								
+									<option value="TWC">전체</option>								
 									<option value="T">제목</option>								
 									<option value="C">내용</option>								
 									<option value="W">작성자</option>								
