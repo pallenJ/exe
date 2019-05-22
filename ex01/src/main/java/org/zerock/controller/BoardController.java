@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.zerock.domain.BoardVO;
+import org.zerock.domain.Criteria;
+import org.zerock.domain.PageDTO;
 import org.zerock.service.BoardService;
 
 import lombok.Setter;
@@ -25,12 +27,13 @@ public class BoardController {
 	private BoardService service;
 	
 	@GetMapping("/list")
-	public void list(HttpServletRequest request, Model model) {
-		model.addAttribute("list", service.getList());
-		/*
-		 * PageDTO pdto = new PageDTO(123, cri); pdto.setStartPage((pageNum-1)*10);
-		 */
-	
+	public void list(HttpServletRequest request,Criteria cri, Model model) {
+		PageDTO pdto = new PageDTO(service.count(), cri);
+		log.info("total:"+pdto.getTotal());
+		log.info("start:"+pdto.getStartPage());
+		log.info("end:"+pdto.getEndPage());
+		model.addAttribute("list", service.getList(cri));
+		model.addAttribute("pageMaker",new PageDTO(service.count(), cri));
 	}
 
  	@GetMapping("/register")
@@ -53,20 +56,23 @@ public class BoardController {
 	}
 
  	@PostMapping("/modify")
-	public String modify(BoardVO board,  RedirectAttributes rttr) {
+	public String modify(BoardVO board, @ModelAttribute("cri") Criteria cri, RedirectAttributes rttr) {
 		log.info("modify post............................");
 		if (service.modify(board)) {
 			rttr.addFlashAttribute("result", "modify");
 		}
-
+		rttr.addAttribute("pageNum", cri.getPageNum());
+		rttr.addAttribute("amount", cri.getAmount());
  		return "redirect:/board/list";
 	}
 
  	@PostMapping("/remove")
-	public String remove(@RequestParam("bno") Long bno, RedirectAttributes rttr) {
+	public String remove(@RequestParam("bno") Long bno, Criteria cri, RedirectAttributes rttr) {
 		if (service.remove(bno)) {
 			rttr.addFlashAttribute("result", "remove");
 		}
+		rttr.addAttribute("pageNum", cri.getPageNum());
+		rttr.addAttribute("amount", cri.getAmount());
  		return "redirect:/board/list";
 	}
 

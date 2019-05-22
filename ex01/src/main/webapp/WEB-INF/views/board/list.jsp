@@ -40,7 +40,8 @@
 						</tbody>
 					</table>
 					
-<%-- 					<div class = 'row'>
+<%-- 					
+						<div class = 'row'>
 						<div class = 'col-lg-12'>
 							<form id = 'searchForm' action="/board/list" method='get'>
 								<select name='type'>
@@ -61,7 +62,7 @@
 					</div>
 					 --%>
 					
-<%-- 					<div class = 'pull-right'>
+					<div class = 'pull-right'>
 						<ul class="pagination">
 							<c:if test="${pageMaker.prev}">
 								<li class="paginate_button previous">
@@ -83,17 +84,17 @@
 								</li>
 							</c:if>
 						</ul>
+					</div>
+					<!-- end Pagination -->
+					
 						<form id = "actionForm" action="/board/list" method="get">
 							<input type="hidden" name = "pageNum" value = "${pageMaker.cri.pageNum}">
 							<input type="hidden" name = "amount" value = "${pageMaker.cri.amount}">
-							<input type="hidden" name = "type" value = "${pageMaker.cri.type}">
-							<input type="hidden" name = "keyword" value = "${pageMaker.cri.keyword}">
+<%-- 							<input type="hidden" name = "type" value = "${pageMaker.cri.type}">
+							<input type="hidden" name = "keyword" value = "${pageMaker.cri.keyword}"> --%>
 						</form>
 											
-					</div> --%>
-					<!-- end Pagination -->
-					<form id = "actionForm" action="/board/list" method="get">
-					</form>
+					
 					<!-- Modal -->
 
 					<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
@@ -164,6 +165,19 @@ $(document).ready(
 		
 		$("#regBtn").click(function() {
 			location.href="/board/register"
+		});
+		
+		$(".paginate_button a").click(function(e) {
+			e.preventDefault();
+		/* 	var type ="${param.type}";
+			var keyword ="${param.keyword}";
+			if(type!=''&&keyword!=''){
+				actionForm.append("<input type='hidden' name='type' value='"+type+"'>");
+				actionForm.append("<input type='hidden' name='keyword' value='"+keyword+"'>");
+			}
+			 */
+			actionForm.find("input[name='pageNum']").val($(this).attr("href"));
+			actionForm.submit();
 		});
 		
 		$('.move').click(
