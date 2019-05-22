@@ -4,7 +4,7 @@
 
 	<select id="getList" resultType="org.zerock.domain.BoardVO">
 		<![CDATA[
-		SELECT * FROM tbl_board WHERE bno > 0
+		SELECT * FROM tbl_board WHERE bno > 0 ORDER BY regdate DESC
 		
 		]]>
 	</select>
@@ -14,7 +14,7 @@
 	</insert>
 	
 	<select id="read" resultType="org.zerock.domain.BoardVO">
-		SELECT * FROM tbl_board WHERE bno =#{bno}
+		SELECT * FROM tbl_board WHERE bno =#{bno} 
 	</select>
 	
 	<delete id="delete">
@@ -44,6 +44,7 @@
  			<include refid="criteria"></include>
 
  		<![CDATA[bno>0]]>
+ 		ORDER BY regdate DESC
 		LIMIT #{pageNum} , #{amount}
 	</select>
 	
