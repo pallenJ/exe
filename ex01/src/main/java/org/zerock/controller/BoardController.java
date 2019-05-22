@@ -28,12 +28,13 @@ public class BoardController {
 	
 	@GetMapping("/list")
 	public void list(HttpServletRequest request,Criteria cri, Model model) {
-		PageDTO pdto = new PageDTO(service.count(), cri);
-		log.info("total:"+pdto.getTotal());
+		PageDTO pdto = new PageDTO(service.count(cri), cri);
+		log.info("=================================");
+		log.info("total:"+service.count(cri));
 		log.info("start:"+pdto.getStartPage());
 		log.info("end:"+pdto.getEndPage());
 		model.addAttribute("list", service.getList(cri));
-		model.addAttribute("pageMaker",new PageDTO(service.count(), cri));
+		model.addAttribute("pageMaker",pdto);
 	}
 
  	@GetMapping("/register")
@@ -43,9 +44,7 @@ public class BoardController {
 
  	@PostMapping("/register")
 	public String register(BoardVO board, RedirectAttributes rttr) {
-		log.info("register post............................................");
 		service.register(board);
-		log.info("register post............................................");
 		rttr.addFlashAttribute("result", "register");
 		return "redirect:/board/list";
 	}
@@ -58,22 +57,29 @@ public class BoardController {
  	@PostMapping("/modify")
 	public String modify(BoardVO board, @ModelAttribute("cri") Criteria cri, RedirectAttributes rttr) {
 		log.info("modify post............................");
+		//log.info("pageNum:" + cri.getPageNum());
 		if (service.modify(board)) {
 			rttr.addFlashAttribute("result", "modify");
 		}
+
 		rttr.addAttribute("pageNum", cri.getPageNum());
 		rttr.addAttribute("amount", cri.getAmount());
+		rttr.addAttribute("type", cri.getType());
+		rttr.addAttribute("keyword", cri.getKeyword());
  		return "redirect:/board/list";
 	}
 
  	@PostMapping("/remove")
 	public String remove(@RequestParam("bno") Long bno, Criteria cri, RedirectAttributes rttr) {
-		if (service.remove(bno)) {
+ 		if (service.remove(bno)) {
 			rttr.addFlashAttribute("result", "remove");
 		}
 		rttr.addAttribute("pageNum", cri.getPageNum());
 		rttr.addAttribute("amount", cri.getAmount());
- 		return "redirect:/board/list";
+		rttr.addAttribute("type", cri.getType());
+		rttr.addAttribute("keyword", cri.getKeyword());
+
+		return "redirect:/board/list";
 	}
 
  }

@@ -18,4 +18,5 @@ public interface BoardService {
 	public List<BoardVO> getList(Criteria cri);
 	
 	public int count();
+	public int count(Criteria cri);
 }

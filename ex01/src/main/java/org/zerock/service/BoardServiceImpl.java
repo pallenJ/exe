@@ -57,6 +57,12 @@ public class BoardServiceImpl implements BoardService{
 		return mapper.count();
 	}
 
+	@Override
+	public int count(Criteria cri) {
+		// TODO Auto-generated method stub
+		return mapper.searchCount(cri);
+	}
+
 	
 
 

@@ -29,13 +29,12 @@
 			<form role="form" action="/board/modify" method="post">
 				<input type="hidden" id = "pageNum" name ="pageNum" value ='<c:out value="${param.pageNum}"></c:out>'>
 				<input type="hidden" id = "amount" name ="amount" value ='<c:out value="${param.amount}"></c:out>'>
-				<%-- 
 				<input type="hidden" id = "type" name ="type" value ='<c:out value="${param.type}"></c:out>'>
 				<input type="hidden" id = "keyword" name ="keyword" value ='<c:out value="${param.keyword}"></c:out>'>
-			 --%>
+			
 				<div class="form-group">
 				<label>Bno</label>
-				<input class = "form-control" name="bno" value='<c:out value="${board.bno}"></c:out>' readonly="readonly">
+				<input class = "form-control" name="bno" value='<c:out value="${board.bno}"></c:out>'>
 				</div>
 				
 				<div class="form-group">
@@ -69,7 +68,6 @@
 </div>
 
 	<script type="text/javascript">
-
 		$(document).ready(function() {
 			
 			var formObj = $("form");
@@ -88,17 +86,15 @@
 					
 					var pageNumTag = $("input[name='pageNum']").clone();
 					var amountTag  = $("input[name='amount']").clone();
-					/* 
 					var keywordTag = $("input[name='keyword']").clone();
 					var typeTag    = $("input[name='type']").clone();
-					 */
+					
 					formObj.empty();
 				
 					formObj.append(pageNumTag);
 					formObj.append(amountTag);
-					/* 
 					formObj.append(keywordTag);
-					formObj.append(typeTag); */
+					formObj.append(typeTag);
 				}
 				
 				formObj.submit();
@@ -108,9 +104,6 @@
 			
 		});
 		
-
-
-
 	</script>
 
 </body>

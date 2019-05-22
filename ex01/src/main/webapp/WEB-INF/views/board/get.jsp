@@ -11,7 +11,32 @@
 </head>
 <body>
 
-
+<script type="text/javascript" src="/resources/js/reply.js"></script>
+<script type="text/javascript">
+$(document).ready(function () {
+	console.log("=====================");
+	console.log("JS TEST");
+	
+	var bnoValue = '<c:out value="${board.bno}"/>';
+	//alert(bnoValue);
+	/* replyService.add(
+		{reply:"JS Test", replyer:"tester",bno:bnoValue},
+			function (result) {
+				alert(result);
+			}
+			
+	);
+	 */
+	 
+	 replyService.getList({bno:bnoValue,page:1}, function(list) {
+	 	for (var i = 0,len = list.length||0; i < len; i++) {
+			console.log();
+			
+		}
+	 });
+	 
+});
+</script>
 
 <div class="row">
 			<div class="col-lg-12">
@@ -55,8 +80,10 @@
 					<input type="hidden" id = "bno" name ="bno" value ='<c:out value="${board.bno}"></c:out>'>
 					<input type="hidden" id = "pageNum" name ="pageNum" value ='<c:out value="${param.pageNum}"></c:out>'>
 					<input type="hidden" id = "amount" name ="amount" value ='<c:out value="${param.amount}"></c:out>'>
-					</form>
-					
+					<input type="hidden" id = "type" name ="type" value ='<c:out value="${param.type}"></c:out>'>
+					<input type="hidden" id = "keyword" name ="keyword" value ='<c:out value="${param.keyword}"></c:out>'>
+				</form>
+				
 				<script type="text/javascript">
 					$(document).ready(function () {
 						

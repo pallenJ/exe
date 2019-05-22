@@ -4,7 +4,7 @@
 
 	<select id="getList" resultType="org.zerock.domain.BoardVO">
 		<![CDATA[
-		SELECT * FROM tbl_board WHERE bno > 0 ORDER BY regdate DESC
+		SELECT * FROM tbl_board WHERE bno > 0 ORDER BY bno DESC
 		
 		]]>
 	</select>
@@ -36,7 +36,7 @@
 		]]>
 	</select>
 	
-		<select id="getListWithPaging" resultType="org.zerock.domain.BoardVO">
+	<select id="getListWithPaging" resultType="org.zerock.domain.BoardVO">
 		<![CDATA[
 		SELECT * FROM tbl_board WHERE
 		]]>
@@ -44,8 +44,20 @@
  			<include refid="criteria"></include>
 
  		<![CDATA[bno>0]]>
- 		ORDER BY regdate DESC
+ 		ORDER BY bno DESC
 		LIMIT #{pageNum} , #{amount}
+	</select>
+	
+	<select id="searchCount" resultType="int">
+	
+		<![CDATA[
+		SELECT COUNT(*) FROM tbl_board WHERE
+		]]>
+
+ 			<include refid="criteria"></include>
+
+ 		<![CDATA[bno>0]]>
+	
 	</select>
 	
 	<sql id ="criteria">
