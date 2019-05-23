@@ -1,7 +1,10 @@
 package org.zerock.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.zerock.domain.Criteria;
 import org.zerock.domain.ReplyVO;
 import org.zerock.mapper.ReplyMapper;
 
@@ -37,6 +40,12 @@ public class ReplyServiceImpl implements ReplyService{
 	public int remove(Long rno) {
 		// TODO Auto-generated method stub
 		return mapper.delete(rno);
+	}
+
+	@Override
+	public List<ReplyVO> getList(Criteria cri, Long bno) {
+		// TODO Auto-generated method stub
+		return mapper.getListWithPaging(cri, bno);
 	}
 
 }

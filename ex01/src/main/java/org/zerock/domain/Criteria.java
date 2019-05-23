@@ -26,7 +26,7 @@ public class Criteria {
 		this.keyword = keyword;
 	}
 	public Criteria() {
-		this(0,10);
+		this(1,10);
 	}
 	
 	public String[] getTypeArr() {

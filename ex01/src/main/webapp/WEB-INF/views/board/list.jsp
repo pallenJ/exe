@@ -54,7 +54,7 @@
 									<option value="TW">제목/작성자</option>								
 								</select>
 								<input type="text" name = "keyword"/>
-								<input type="hidden" name = "pageNum" value ="${pageMaker.cri.pageNum}"/>
+								<%-- <input type="hidden" name = "pageNum" value ="${pageMaker.cri.pageNum}"/> --%>
 								<input type="hidden" name = "amount" value ="${pageMaker.cri.amount}"/>
 								<button class="btn btn-default">Search</button>
 							</form>						

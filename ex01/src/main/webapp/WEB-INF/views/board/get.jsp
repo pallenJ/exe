@@ -18,7 +18,7 @@ $(document).ready(function () {
 	console.log("JS TEST");
 	
 	var bnoValue = '<c:out value="${board.bno}"/>';
-	//alert(bnoValue);
+	//add test
 	/* replyService.add(
 		{reply:"JS Test", replyer:"tester",bno:bnoValue},
 			function (result) {
@@ -28,13 +28,37 @@ $(document).ready(function () {
 	);
 	 */
 	 
-	 replyService.getList({bno:bnoValue,page:1}, function(list) {
+	 //list test
+	/*  replyService.getList({bno:bnoValue,page:1}, function(list) {
 	 	for (var i = 0,len = list.length||0; i < len; i++) {
 			console.log();
 			
 		}
 	 });
-	 
+	  */
+	  
+	  //remove test
+	  /* replyService.remove(23, function(count) {
+	  	console.log(count);
+	  	
+	  	if(count==="success"){alert("removed");}
+	  }, function(error) {
+	  	alert("ERROR")
+	  }) */
+	  
+	  //update test
+	/*   replyService.update({
+	  	rno : 22,
+	  	bno : 293,
+	  	reply : "modify test2"
+	  }, function(result) {
+	  	alert("수정")
+	  }) 
+	   */
+	   //get test
+	  /* replyService.get(10, function(data) {
+		console.log(data)
+	}); */
 });
 </script>
 
