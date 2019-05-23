@@ -132,11 +132,11 @@ $(document).ready(function () {
 									
 									<div class="form-group">
 										<label>Reply</label>
-										<input class="form-control" name = 'reply' value = 'new reply'>
+										<input class="form-control" name = 'reply' value = 'new reply' required="required">
 									</div>
 									<div class="form-group">
 										<label>Replyer</label>
-										<input class="form-control" name = 'replyer' value = 'replyer'>
+										<input class="form-control" name = 'replyer' value = 'replyer' required="required">
 									</div>
 									<div class="form-group">
 										<label>Reply Date</label>
@@ -213,15 +213,17 @@ $(document).ready(function () {
 						var replyUL  = $(".chat");
 						//var pageNum = $("#pageNum").val();
 						showList(1);
+						
 						function showList(page) {
 							replyService.getList(
 							{bno:bnoValue,page: page||1}		
 							, function(replyCnt,list) {
-								if(page == -1){
-									var pageNum = Math.ceil(replyCnt/10.0);
-									showList(pageNum);
+								/* if(page == -1){
+									pageNum = Math.ceil(replyCnt/10.0);
+									alert("pnum:"+pageNum);
+									//showList(pageNum);
 									return;
-								}
+								} */
 								var str = "";
 								if(list == null || list.length == 0){
 									replyUL.html(""); return;
@@ -272,7 +274,7 @@ $(document).ready(function () {
 								modal.find("input").val("");
 								$(".modal").modal("hide");
 								//showList(1);
-								showList(-1);
+								showList(pageNum);
 						});
 						
 					});
