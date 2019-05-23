@@ -19,7 +19,9 @@
 	</update>
 	
 	<select id = "getListWithPaging" resultType="org.zerock.domain.ReplyVO">
-		SELECT * FROM  tbl_reply WHERE bno = #{bno} ORDER BY rno ASC 
+		SELECT * FROM  tbl_reply WHERE bno = #{bno} ORDER BY rno DESC LIMIT #{cri.pageNum} , #{cri.amount}
 	</select>
-
+	<select id="getCountByBno" resultType="int">
+		SELECT COUNT(*) FROM tbl_reply WHERE bno = #{bno} ORDER BY rno DESC
+	</select>
 </mapper>

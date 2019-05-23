@@ -108,8 +108,89 @@ $(document).ready(function () {
 					<input type="hidden" id = "keyword" name ="keyword" value ='<c:out value="${param.keyword}"></c:out>'>
 				</form>
 				
+			</div>
+			<!-- /.panel-body -->
+		</div>
+		<!-- /.panel -->
+	</div>
+	<!-- /.col-lg-12 -->
+</div>
+
+	<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
+						aria-labelledby="myModalLabel" aria-hidden="true">
+
+						<div class="modal-dialog">
+							<div class="modal-content">
+								<div class="modal-header">
+									<button type="button" class="close" data-dismiss="modal"
+										aria-hidden="true">&times;</button>
+									<h4 class="modal-title" id="myModalLabel">REPLY MODAL</h4>
+
+								</div>
+
+								<div class="modal-body">
+									
+									<div class="form-group">
+										<label>Reply</label>
+										<input class="form-control" name = 'reply' value = 'new reply'>
+									</div>
+									<div class="form-group">
+										<label>Replyer</label>
+										<input class="form-control" name = 'replyer' value = 'replyer'>
+									</div>
+									<div class="form-group">
+										<label>Reply Date</label>
+										<input class="form-control" name = 'replyDate' value = ''>
+									</div>
+									
+									
+								</div>
+								
+								<div class="modal-footer">
+									
+									<button type="button" id='modalModBtn' class="btn btn-warning">Modify</button>
+									<button type="button" id='modalRemoveBtn' class="btn btn-danger">Remove</button>
+									<button type="button" id='modalRegisterBtn' class="btn btn-primary">Register</button>
+									<button type="button" id='modalCloseBtn' class="btn btn-default">Close</button>
+								</div>
+								
+							</div>
+							<!--/. modal-content -->
+						</div>
+						<!--/. modal-dialog -->
+					</div>
+					<!--/. modal -->
+
+
+
+<div class="row">
+	<div class="col-lg-12">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<i class = "fa fa-comment fa-fw"></i>Reply
+				<button id = 'addReplyBtn' class = 'btn btn-primary btn-xs pull-right'>New Reply</button>
+			</div>
+			<!-- /.panel-heading -->
+			<div class="panel-body">
+				<ul class="chat">
+					
+				</ul>
+				<!-- .end ul -->
+				
+			</div>
+			<!-- /.panel-body -->
+			<div class="panel-footer"></div>
+		</div>
+		<!-- /.panel -->
+	</div>
+	<!-- /.col-lg-12 -->
+</div>
+
+				
+				<!-- 페이징&서치 관련 처리 -->
 				<script type="text/javascript">
 					$(document).ready(function () {
+						
 						
 						var openForm = $("#operForm")
 						$("button[data-oper='modify']").click(function(e) {
@@ -125,13 +206,147 @@ $(document).ready(function () {
 				
 				</script>
 				
-			</div>
-			<!-- /.panel-body -->
-		</div>
-		<!-- /.panel -->
-	</div>
-	<!-- /.col-lg-12 -->
-</div>
+				<!-- 댓글처리 -->
+				<script type="text/javascript">
+					$(document).ready(function () {
+						var bnoValue =	'<c:out value="${board.bno}"></c:out>';
+						var replyUL  = $(".chat");
+						//var pageNum = $("#pageNum").val();
+						showList(1);
+						function showList(page) {
+							replyService.getList(
+							{bno:bnoValue,page: page||1}		
+							, function(replyCnt,list) {
+								if(page == -1){
+									var pageNum = Math.ceil(replyCnt/10.0);
+									showList(pageNum);
+									return;
+								}
+								var str = "";
+								if(list == null || list.length == 0){
+									replyUL.html(""); return;
+								}
+								
+								for (var i = 0,len= list.length||0; i < len; i++) {
+								str += "<li class='left clearfix' data-rno='"+list[i].rno+"'>";	
+								str += "<div><div class='header'><strong class = 'primary-font'>"+list[i].replyer+"</strong>";
+								str += "<small class='pull-right text-muted'>"+replyService.displayTime(list[i].replyDate)+"</small></div>";
+								str += "<p>"+list[i].reply+"</p></div></li>";
+								}	
+								
+								replyUL.html(str);
+								showReplyPage(replyCnt);
+							})
+						}//end showList
+						
+					
+					var modal = $(".modal");
+					var modalInputReply = modal.find("input[name='reply']");
+					var modalInputReplyer = modal.find("input[name='replyer']");
+					var modalInputReplyDate = modal.find("input[name='replyDate']");
+					
+					var modalModeBtn     = $("#modalModBtn");
+					var modalRemoveBtn   = $("#modalRemoveBtn");
+					var modalRegisterBtn = $("#modalRegisterBtn");
+					/* add */
+					$("#addReplyBtn").click(function() {
+						modal.find("input").val("");
+						modalInputReplyDate.closest("div").hide();
+						modal.find("button[id !='modalCloseBtn']").hide();
+						
+						modalRegisterBtn.show();
+						$(".modal").modal("show");
+					});
+					
+					/* remove */
+					$("#modalRegisterBtn").click(function() {
+						var reply = {
+								reply: modalInputReply.val(),
+								replyer: modalInputReplyer.val(),
+								bno:bnoValue
+						}
+						
+						replyService.add(reply, function(result) {
+								alert(result);
+								
+								modal.find("input").val("");
+								$(".modal").modal("hide");
+								//showList(1);
+								showList(-1);
+						});
+						
+					});
+					
+					/* chat */
+					$(".chat").on("click","li", function() {
+						var rno = $(this).data("rno");
+						replyService.get(rno,function(reply){
+							
+							modalInputReply.val(reply.reply);
+							modalInputReplyer.val(reply.replyer);
+							modalInputReplyDate.val(replyService.displayTime(reply.replyDate)).attr("readonly", "readonly");
+							modal.data("rno", reply.rno);
+							
+							
+						});
+					})
+					
+					/* close */
+					$("#modalCloseBtn").click(function() {
+						$(".modal").modal("hide");
+					})
+					
+					var pageNum = 1;
+					var replyPageFooter = $(".panel-footer");
+					
+					function showReplyPage(replyCnt) {
+						var endNum = Math.ceil(pageNum/10.0)*10;
+						var startNum = endNum-9;
+						
+						var prev = (startNum != 1);
+						var next =false;
+						
+						if(endNum*10>=replyCnt){
+							endNum = Math.ceil(replyCnt/10.0);
+						}
+						if(endNum*10<replyCnt){
+							next = true;
+						}
+						
+						var str = "<ul class='pagination pull-right'>";
+						if(prev){
+							str+="<li class='page-item'> <a class='page-link' href='"+(startNum-1)+"'>Previous</a></li>'";
+						}
+						
+						for (var i = startNum; i <=endNum; i++) {
+							var active = pageNum==i?"active":"";
+							str+= "<li class='page-item "+active+"'> <a class='page-link' href='"+i+"'>"+i+"</a></li>";
+						}
+						
+						if(next){
+							str+="<li class='page-item'> <a class='page-link' href='"+(endNum+1)+"'>Next</a></li>'";
+						}
+						str+="</ul>"
+						
+						replyPageFooter.html(str)
+					}
+					
+					replyPageFooter.on("click","li a", function(e) {
+						e.preventDefault();
+						
+						var targetPageNum =$(this).attr("href");
+						
+						pageNum = targetPageNum;
+						
+						showList(pageNum);
+						
+					});
+					
+					
+				});
+					
+				</script>
+
 </body>
 </html>
 <%@include file="../include/footer.jsp"%>    

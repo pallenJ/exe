@@ -42,10 +42,17 @@ public class MapperTest {
 	public void testMapper() {
 		log.info(mapper);
 	}
-	@Test
+//	@Test
 	public void testList() {
-		Criteria cri = new Criteria();
-		List<ReplyVO> replies = mapper.getListWithPaging(cri, bnoArr[0]);
+		Criteria cri = new Criteria(0,4);
+		List<ReplyVO> replies = mapper.getListWithPaging(cri, 293L);
+		log.info(cri.getAmount());
 		replies.forEach(r->log.info(r));
 	}
+//	@Test
+	public void testCnt() {
+		log.info(mapper.getCountByBno(bnoArr[2]));
+	}
+
+
 }

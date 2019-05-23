@@ -34,7 +34,7 @@ var replyService = (function () {
 			$.getJSON("/replies/pages/"+bno+"/"+page+".json", 
 		    	function(data) {
 					if(callback){
-					callback(data);
+					callback(data.replyCnt, data.list);
 					}
 				
 		    	}).fail(function(xhr,status,err) {
@@ -98,6 +98,38 @@ var replyService = (function () {
 					});
 			
 		}
+		////////////////////////get end
+		
+		function bigger9(data){
+			return (data>9?'':'0')+data;
+		}
+		
+		function displayTime(timeValue) {
+			var today = new Date();
+			
+			var gap = today.getTime() - timeValue;
+			
+			var dateObj = new Date(timeValue);
+			
+			var str = "";
+			
+			if(gap < 1000*60*60*24){
+				/*var hh = dateObj.getHours();
+				var mi = dateObj.getMinutes();
+				var ss = dateObj.getSeconds();
+				*/
+				return [bigger9(dateObj.getHours()),":",bigger9(dateObj.getMinutes()),":",bigger9(dateObj.getSeconds())].join('');
+			}else{
+				/*var yy = dateObj.getFullYear();
+				var mm = dateObj.getMonth()+1;
+				var dd = dateObj.getDate();
+				alert(yy+"/"+mm+"/"+dd)*/
+				return [dateObj.getFullYear(),"/",bigger9(dateObj.getMonth()+1),"/",bigger9(dateObj.getDate())].join('');
+				
+			}
+			
+			
+		}
 		
 		/////////////////////////////////////////////
 		return {
@@ -106,6 +138,8 @@ var replyService = (function () {
 		,remove : remove
 		,update : update
 		,get : get
+		,displayTime : displayTime
+		
 		};
 	
 	})();
