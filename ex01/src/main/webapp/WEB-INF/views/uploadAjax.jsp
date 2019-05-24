@@ -10,6 +10,31 @@ crossorigin="anonymous"></script> -->
 <head>
 <meta charset="UTF-8">
 <title>Upload with Ajax</title>
+<style>
+	.uploadResult{
+		width: 100%;
+		background-color: gray;
+	}
+	
+	.uploadResult ul{
+		display: flex;
+		flex-flow: row;
+		justify-content: center;
+		align-items: center;
+	}
+	
+	.uploadResult ul li{
+		list-style: none;
+		padding: 10px;
+	}
+	.uploadResult ul li img{
+		width: 20px;
+	}
+	
+
+</style>
+
+
 </head>
 <body>
 
@@ -18,7 +43,9 @@ crossorigin="anonymous"></script> -->
 		<input type="file" name="uploadFile" multiple>
 		<button id="uploadBtn">Upload</button>
 	</div>
-
+	<div class="uploadResult">
+		<ul></ul>
+	</div>
 </body>
 <script type="text/javascript">
 	
@@ -63,14 +90,50 @@ crossorigin="anonymous"></script> -->
 				contentType: false,
 				data : formData,
 				type: 'POST',
+				dataType: 'json',
 				success: function (result) {
-					alert("uploaded")
+					//alert("uploaded")
+					console.log(result);
+					showUploadedFile(result);
 				}
 			});//$.ajax
-			
-		})
+		});
+		
+		var uploadResult = $(".uploadResult ul");
+		
+		function showUploadedFile(uploadResultArr) {
+			var str = "";
+			$(uploadResultArr).each(function(i, obj) {
+				
+				var fileCallPath = encodeURIComponent(obj.uploadPath+"/"+obj.uuid+"_"+obj.fileName);
+				
+				var fileLink = fileCallPath.replace(new RegExp(/\\/g),"/");
+				str +="<div><li><a href='/download?fileName="+obj.fileName+"'>"+obj.fileName+"</a>";
+				str +="<span data-file=\'"+fileCallPath+"\' data-type='file'>x</span></li></div>"
+			});
+			alert(str);
+			uploadResult.append(str)
 		}
-	);
+		
+			$(".uploadResult").on("click","span", function(e) {
+			var targetFile = $(this).data("file");
+			var type       = $(this).data("type");
+			//alert($(this).data("file"));
+			console.log(targetFile);
+			
+			$.ajax({
+				url:'/deleteFile',
+				data : {fileName: targetFile, type: type},
+				dataType:'text',
+				type: 'POST',
+				success: function (result) {
+					alert(result);
+				}
+			});
+			
+			});
+		
+		});
 
 </script>
 
