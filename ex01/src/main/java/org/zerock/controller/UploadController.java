@@ -1,6 +1,9 @@
 package org.zerock.controller;
 
 import java.io.File;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.UUID;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -45,16 +48,28 @@ public class UploadController {
 	}
 	@PostMapping("/uploadAjaxAction")
 	public void uploadAjaxAction(MultipartFile[] uploadFile) {
+		
 		String uploadFolder = "C:\\upload";
+		File uploadPath = new File(uploadFolder, getFolder());
+		
+		log.info("uploadPath:"+uploadPath);
+		
+		if(!uploadPath.exists()){
+			uploadPath.mkdirs();
+		}//make yyyy/MM/dd
+		
 		for (MultipartFile multipartFile : uploadFile) {
 			log.info("----------------------------");
 			log.info("Upload File Name: "+multipartFile.getOriginalFilename());
 			log.info("Upload File Size: "+multipartFile.getSize());
 			
 			String uploadFileName = multipartFile.getOriginalFilename();
+			UUID uuid = UUID.randomUUID();
 			uploadFileName = uploadFileName.substring(uploadFileName.lastIndexOf("\\")+1);
+			log.info("only file name:"+uploadFileName);
+			uploadFileName = uuid+"_"+uploadFileName;
 			
-			File saveFile = new File(uploadFolder,multipartFile.getOriginalFilename());
+			File saveFile = new File(uploadPath,uploadFileName);
 			try {
 				multipartFile.transferTo(saveFile);
 			} catch (Exception e) {
@@ -66,5 +81,13 @@ public class UploadController {
 		
 		
 	}
+	
+	public String getFolder() {
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		//Date date = new Date();
+		String str = sdf.format(new Date()); 
+		return str.replace("-", File.separator);
+	}
+	
 	
 }
