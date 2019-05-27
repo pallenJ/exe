@@ -279,6 +279,27 @@ $(document).ready(function () {
 						
 					});
 					
+					modalModeBtn.click(function(e) {
+						var reply = {rno:modal.data("rno"), reply: modalInputReplyer.val()};
+						replyService.update(reply, function(result) {
+							alert(result);
+							modal.modal("hide");
+							showList(1);
+						});
+					});
+					
+					modalRemoveBtn.click(function(e) {
+						var rno = modal.data("rno");
+						replyService.remove(rno, function(result) {
+							
+							alert(result);
+							modal.modal("hide");
+							showList(1);
+						});
+					
+					});
+					
+					
 					/* chat */
 					$(".chat").on("click","li", function() {
 						var rno = $(this).data("rno");
@@ -289,6 +310,11 @@ $(document).ready(function () {
 							modalInputReplyDate.val(replyService.displayTime(reply.replyDate)).attr("readonly", "readonly");
 							modal.data("rno", reply.rno);
 							
+							modal.find("button[id !='modalCloseBtn']").hide();
+							modalModeBtn.show();
+							modalRemoveBtn.show();
+							
+							$(".modal").modal("show");
 							
 						});
 					})

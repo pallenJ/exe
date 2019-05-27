@@ -48,7 +48,9 @@ public class BoardServiceImpl implements BoardService{
 	@Override
 	public List<BoardVO> getList(Criteria cri) {
 		// TODO Auto-generated method stub
+		
 		Criteria temp = new Criteria(cri.getAmount()*(cri.getPageNum()-1), cri.getAmount(),cri.getType(),cri.getKeyword());
+		
 		return mapper.getListWithPaging(temp);
 	}
 	@Override
