@@ -14,6 +14,7 @@ import org.zerock.domain.BoardVO;
 import org.zerock.domain.Criteria;
 import org.zerock.domain.ReplyVO;
 import org.zerock.mapper.BoardMapper;
+import org.zerock.mapper.ReplyMapper;
 
 import lombok.Setter;
 import lombok.extern.log4j.Log4j;
@@ -23,33 +24,27 @@ import lombok.extern.log4j.Log4j;
 @Log4j
 public class MapperTest {
 
+	/*
+	 * @Setter(onMethod_ = {@Autowired}) private BoardMapper mapper;
+	 */
 	@Setter(onMethod_ = {@Autowired})
-	private BoardMapper mapper;
-	//@Setter(onMethod_ = {@Autowired})
-	//private ReplyMapper mapper;
-	//private Long[] bnoArr = {291L,292L,293L,294L,295L};
+	private ReplyMapper mapper;
+	private Long[] bnoArr = {395L,396L,397L,398L,399L};
 	@Test
 	public void testCreater() {
-		/*
-		 * IntStream.rangeClosed(11, 50).forEach(i->{ ReplyVO vo = new ReplyVO();
-		 * vo.setBno(bnoArr[i%5]); vo.setReply("댓글 테스트 "+i);
-		 * vo.setReplyer("replyer "+i); mapper.insert(vo); });
-		 */
-		IntStream.rangeClosed(3, 200).forEach(i->{
-			int temp = i;
-			temp*=2;
-			BoardVO vo = new BoardVO();
-			vo.setWriter("testWriter "+temp);
-			vo.setTitle("testTitle "+temp);
-			vo.setContent("testContent "+temp);
-			mapper.insert(vo);
-			temp+=1;
-			vo.setWriter("샘플 작성자 "+temp);
-			vo.setTitle("샘플 타이틀 "+temp);
-			vo.setContent("샘플 내용 "+temp);
-			mapper.insert(vo);
-		});
 		
+		  IntStream.rangeClosed(51, 200).forEach(i->{ ReplyVO vo = new ReplyVO();
+		  vo.setBno(bnoArr[i%5]); vo.setReply("댓글 테스트 "+i);
+		  vo.setReplyer("replyer "+i); mapper.insert(vo); });
+		 
+		/*
+		 * IntStream.rangeClosed(3, 200).forEach(i->{ int temp = i; temp*=2; BoardVO vo
+		 * = new BoardVO(); vo.setWriter("testWriter "+temp);
+		 * vo.setTitle("testTitle "+temp); vo.setContent("testContent "+temp);
+		 * mapper.insert(vo); temp+=1; vo.setWriter("샘플 작성자 "+temp);
+		 * vo.setTitle("샘플 타이틀 "+temp); vo.setContent("샘플 내용 "+temp); mapper.insert(vo);
+		 * });
+		 */
 	}
 //	@Test
 	/*

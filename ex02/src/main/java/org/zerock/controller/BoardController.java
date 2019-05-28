@@ -28,15 +28,16 @@ public class BoardController {
 	
 	@GetMapping("/list")
 	public void list(HttpServletRequest request,Criteria cri, Model model) {
-		model.addAttribute("list",service.getList());
-		/*
-		 * PageDTO pdto = new PageDTO(service.count(cri), cri);
-		 * log.info("=================================");
-		 * log.info("total:"+service.count(cri));
-		 * log.info("start:"+pdto.getStartPage()); log.info("end:"+pdto.getEndPage());
-		 * model.addAttribute("list", service.getList(cri));
-		 * model.addAttribute("pageMaker",pdto);
-		 */
+		
+
+		
+		  PageDTO pdto = new PageDTO(service.count(cri), cri);
+		  log.info("=================================");
+		  log.info("total:"+service.count(cri));
+		  log.info("start:"+pdto.getStartPage()); log.info("end:"+pdto.getEndPage());
+		  model.addAttribute("list", service.getList(cri));
+		  model.addAttribute("pageMaker",pdto);
+		 		 
 	}
 
  	@GetMapping("/register")
@@ -63,11 +64,11 @@ public class BoardController {
 		if (service.modify(board)) {
 			rttr.addFlashAttribute("result", "modify");
 		}
-		/*
-		 * rttr.addAttribute("pageNum", cri.getPageNum()); rttr.addAttribute("amount",
-		 * cri.getAmount()); rttr.addAttribute("type", cri.getType());
-		 * rttr.addAttribute("keyword", cri.getKeyword());
-		 */
+		
+		  rttr.addAttribute("pageNum", cri.getPageNum()); rttr.addAttribute("amount",
+		  cri.getAmount()); rttr.addAttribute("type", cri.getType());
+		  rttr.addAttribute("keyword", cri.getKeyword());
+		 
 		return "redirect:/board/list";
 	}
 
@@ -76,11 +77,11 @@ public class BoardController {
  		if (service.remove(bno)) {
 			rttr.addFlashAttribute("result", "remove");
 		}
-		/*
-		 * rttr.addAttribute("pageNum", cri.getPageNum()); rttr.addAttribute("amount",
-		 * cri.getAmount()); rttr.addAttribute("type", cri.getType());
-		 * rttr.addAttribute("keyword", cri.getKeyword());
-		 */
+		
+		  rttr.addAttribute("pageNum", cri.getPageNum()); rttr.addAttribute("amount",
+		  cri.getAmount()); rttr.addAttribute("type", cri.getType());
+		  rttr.addAttribute("keyword", cri.getKeyword());
+		 
 		return "redirect:/board/list";
 	}
 

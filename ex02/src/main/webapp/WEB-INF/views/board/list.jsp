@@ -40,7 +40,7 @@
 						</tbody>
 					</table>
 					
-					<%-- 
+					
 						<div class = 'row'>
 						<div class = 'col-lg-12'>
 							<form id = 'searchForm' action="/board/list" method='get'>
@@ -60,8 +60,8 @@
 						</div>
 					</div>
 					
-					 --%>
-					<%--  
+					
+					 
 					<div class = 'pull-right'>
 						<ul class="pagination">
 							<c:if test="${pageMaker.prev}">
@@ -85,14 +85,14 @@
 							</c:if>
 						</ul>
 					</div>
-					 --%>
+					
 					<!-- end Pagination -->
 					
 						<form id = "actionForm" action="/board/list" method="get">
-							<%-- <input type="hidden" name = "pageNum" value = "${pageMaker.cri.pageNum}">
+							<input type="hidden" name = "pageNum" value = "${pageMaker.cri.pageNum}">
 							<input type="hidden" name = "amount" value = "${pageMaker.cri.amount}">
 							<input type="hidden" name = "type" value = "${pageMaker.cri.type}">
-							<input type="hidden" name = "keyword" value = "${pageMaker.cri.keyword}"> --%>
+							<input type="hidden" name = "keyword" value = "${pageMaker.cri.keyword}">
 						</form>
 											
 					
