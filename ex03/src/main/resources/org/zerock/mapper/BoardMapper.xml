@@ -35,7 +35,7 @@
 	SELECT COUNT(*) FROM tbl_board WHERE bno>0
 		]]>
 	</select>
-<!-- 	
+	
 	<select id="getListWithPaging" resultType="org.zerock.domain.BoardVO">
 		<![CDATA[
 		SELECT * FROM tbl_board WHERE
@@ -47,8 +47,8 @@
  		ORDER BY bno DESC
 		LIMIT #{pageNum} , #{amount}
 	</select>
-	 -->
-<!-- 	
+	
+	
 	<select id="searchCount" resultType="int">
 	
 		<![CDATA[
@@ -60,8 +60,8 @@
  		<![CDATA[bno>0]]>
 	
 	</select>
-	 -->
-	 <!-- 
+	
+	 
 	<sql id ="criteria">
 
  		<trim prefix="(" suffix=") AND" prefixOverrides="OR">
@@ -84,5 +84,5 @@
  			</trim>
 
  	</sql>
-	 -->
+	
 </mapper>

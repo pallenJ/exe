@@ -46,27 +46,28 @@ public class BoardServiceImpl implements BoardService{
 		return mapper.getList();
 	}
 
-	/*
-	 * @Override public List<BoardVO> getList(Criteria cri) {
-	 * 
-	 * 
-	 * Criteria temp = new Criteria(cri.getAmount()*(cri.getPageNum()-1),
-	 * cri.getAmount(),cri.getType(),cri.getKeyword());
-	 * 
-	 * return mapper.getListWithPaging(temp);
-	 * 
-	 * }
-	 */
+	
+	  @Override public List<BoardVO> getList(Criteria cri) {
+	  
+	  
+	  Criteria temp = new Criteria(cri.getAmount()*(cri.getPageNum()-1),
+	  cri.getAmount(),cri.getType(),cri.getKeyword());
+	  
+	  return mapper.getListWithPaging(temp);
+	  
+	  }
+	 
 	@Override
 	public int count() {
 		// TODO Auto-generated method stub
 		return mapper.count();
 	}
 
-	/*
-	 * @Override public int count(Criteria cri) { // TODO Auto-generated method stub
-	 * return mapper.searchCount(cri); }
-	 */
+	
+	
+	  @Override public int count(Criteria cri) { // TODO Auto-generated method stub
+	  return mapper.searchCount(cri); }
+	 
 
 	
 
