@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.support.StandardMultipartHttpServletRequest;
 import org.zerock.domain.AttachFileDTO;
 
 import lombok.extern.log4j.Log4j;
@@ -115,15 +116,17 @@ public class UploadController {
 		log.info("resource:"+resource);
 		
 		if(!resource.exists()) {
+			log.info("resource not found");
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
-		
+		log.info("log 1");
 		String resourceName = resource.getFilename();
 		
 		//remove UUID
 		String resourceOriginalName = resourceName.substring(resourceName.indexOf("_")+1);
 		
 		HttpHeaders headers = new HttpHeaders();
+		log.info("log 2");
 		
 		try {
 			String downloadName = null;
@@ -138,6 +141,7 @@ public class UploadController {
 				log.info("Chrome browser");
 				downloadName = new String(resourceOriginalName.getBytes("UTF-8"),"ISO-8859-1");
 			}
+			log.info("log 3");
 			log.info("downloadName:"+downloadName);
 			headers.add("Content-Disposition", "attachment; filename="+downloadName); 
 		} catch (Exception e) {
