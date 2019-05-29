@@ -6,25 +6,33 @@
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 		
 		<bean id = "customAcessDenied" class="org.zerock.security.CustomAccessDeniedHandler"></bean>
+		<bean id = "customLoginSuccess" class="org.zerock.security.CustomLoginSuccessHandler"></bean>
+		<bean id = "customPasswordEncoder" class="org.zerock.security.CustomNoOpEncoder"></bean>
 		
 		<security:http>
 		<security:intercept-url pattern="/sample/all" access="permitAll"/>			
 		<security:intercept-url pattern="/sample/member" access="hasRole('ROLE_MEMBER')"/>			
 		<security:intercept-url pattern="/sample/admin" access="hasRole('ROLE_ADMIN')"/>			
 		<!-- 	<security:form-login/> -->
-			<security:form-login login-page="/customLogin"/>
-		
+		<security:form-login login-page="/customLogin" authentication-success-handler-ref="customLoginSuccess"/>
+		<security:logout logout-url="/customLogout" invalidate-session="true"/>
 		<!-- <security:access-denied-handler error-page="/accessError"/> -->
 		<security:access-denied-handler ref="customAcessDenied"/>
+		<!-- <security:csrf disabled="true"/> -->
 		</security:http>
 		
 		<security:authentication-manager>
 			<security:authentication-provider>
-				<security:user-service>
+				<security:jdbc-user-service data-source-ref="dataSource"/>
+				<!-- <security:user-service>
 					<security:user name="member" password="{noop}1111" authorities="ROLE_MEMBER"/>
 					<security:user name="admin" password="{noop}1234" authorities="ROLE_ADMIN"/>
-				</security:user-service>			
+				</security:user-service>			 -->
+				<security:password-encoder ref="customPasswordEncoder"/>
 			</security:authentication-provider>
 			
 		</security:authentication-manager>
+		
+		
+		
 </beans>
