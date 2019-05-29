@@ -168,6 +168,10 @@ $(document).ready(function () {
 		<div class="panel panel-default">
 			<div class="panel-heading">
 				<i class = "fa fa-comment fa-fw"></i>Reply
+					
+				 <b style="size: 4"> [<c:out value="${board.replyCnt}"></c:out>]
+				
+				 </b>
 				<button id = 'addReplyBtn' class = 'btn btn-primary btn-xs pull-right'>New Reply</button>
 			</div>
 			<!-- /.panel-heading -->

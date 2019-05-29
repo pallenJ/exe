@@ -32,6 +32,12 @@
 									<td><a class='move' href='<c:out value="${board.bno}"/>'>
 									<c:out value="${board.title}"/>
 									</a>
+									<b>
+									<font color="red" size="1.5">
+									[<c:out value="${board.replyCnt}"></c:out>]
+									</font>
+									</b>
+									
 									<td><c:out value="${board.writer}"/>
 									<td><c:out value="${board.regdate}"/>
 									<td><c:out value="${board.updateDate}"/>
