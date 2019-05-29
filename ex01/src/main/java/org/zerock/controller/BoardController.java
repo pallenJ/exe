@@ -3,6 +3,7 @@ package org.zerock.controller;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -38,11 +39,13 @@ public class BoardController {
 	}
 
  	@GetMapping("/register")
+ 	@PreAuthorize("isAuthenticated()")
 	public void register() {
 
  	}
 
  	@PostMapping("/register")
+ 	@PreAuthorize("isAuthenticated()")
 	public String register(BoardVO board, RedirectAttributes rttr) {
 		service.register(board);
 		rttr.addFlashAttribute("result", "register");
@@ -53,7 +56,8 @@ public class BoardController {
 	public void get(@RequestParam("bno") Long bno, Model model) {
 		model.addAttribute("board", service.get(bno));
 	}
-
+ 	
+ 	@PreAuthorize("principal.username == #writer")
  	@PostMapping("/modify")
 	public String modify(BoardVO board, @ModelAttribute("cri") Criteria cri, RedirectAttributes rttr) {
 		log.info("modify post............................");
@@ -68,7 +72,8 @@ public class BoardController {
 		rttr.addAttribute("keyword", cri.getKeyword());
  		return "redirect:/board/list";
 	}
-
+ 	
+ 	@PreAuthorize("principal.username == #writer")
  	@PostMapping("/remove")
 	public String remove(@RequestParam("bno") Long bno, Criteria cri, RedirectAttributes rttr) {
  		if (service.remove(bno)) {

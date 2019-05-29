@@ -1,7 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix='c' uri='http://java.sun.com/jsp/jstl/core'%>
-<%@ taglib prefix='fmt' uri="http://java.sun.com/jsp/jstl/fmt"%>    
+<%@ taglib prefix='fmt' uri="http://java.sun.com/jsp/jstl/fmt"%>  
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>    
 <%@include file="../include/header.jsp"%>    
 <!DOCTYPE html>
 <html>
@@ -27,6 +28,8 @@
 			<div class="panel-body">
 			
 			<form role="form" action="/board/modify" method="post">
+				<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+				
 				<input type="hidden" id = "pageNum" name ="pageNum" value ='<c:out value="${param.pageNum}"></c:out>'>
 				<input type="hidden" id = "amount" name ="amount" value ='<c:out value="${param.amount}"></c:out>'>
 				<input type="hidden" id = "type" name ="type" value ='<c:out value="${param.type}"></c:out>'>
@@ -53,10 +56,12 @@
 				<label>Writer</label>
 				<input class = "form-control" name="writer" value='<c:out value="${board.writer}"></c:out>' readonly="readonly">
 				</div>
-				
+				<sec:authentication property="principal" var="pinfo"/>
+				<sec:authorize access="isAuthenticated()">
+				<c:if test="${pinfo.username eq board.writer}">
 				<button type="submit" data-oper="modify" class="btn btn-default">Modify</button>				
 				<button type="submit" data-oper="remove" class="btn btn-danger">Remove</button>				
-				<button type="submit" data-oper="list" class="btn btn-info">List</button>				
+				<button type="submit" data-oper="list" class="btn btn-info">List</button></c:if></sec:authorize>				
 			</form>	
 				
 			</div>

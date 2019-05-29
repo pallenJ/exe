@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@include file="../include/header.jsp"%>
+<%@ taglib prefix='c' uri='http://java.sun.com/jsp/jstl/core'%>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>    
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,6 +12,7 @@
 <body>
 
 	<form role="form" action="/board/register" method="post">
+		<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 		<div class="row">
 			<div class="col-lg-12">
 				<h1 class="page-header">Board Register</h1>
@@ -23,7 +26,8 @@
 		</div>
 		<div class="form-group">
 			<label>writer</label> <input type="text" class="form-control"
-				name="writer" id="writer" placeholder="writer" required="required">
+				name="writer" id="writer" placeholder="writer" value='<sec:authentication property="principal.username"/>' 
+				readonly="readonly">
 		</div>
 
 

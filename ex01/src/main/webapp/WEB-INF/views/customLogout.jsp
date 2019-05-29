@@ -7,14 +7,22 @@
 <title>Insert title here</title>
 </head>
 <body>
-
+<!-- 
 <h1> Logout Page</h1>
-
+ -->
 <form method="post" action="/customLogout">
 	
 	<input type="hidden" name ="${_csrf.parameterName}" value="${_csrf.token}">
-	<button>로그아웃</button>
+	<!-- <button>로그아웃</button> -->
 </form>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script type="text/javascript">
+
+$(document).ready(function () {
+	alert("로그아웃 되었습니다");
+	$("form").submit();
+});
+</script>
 
 </body>
 </html>

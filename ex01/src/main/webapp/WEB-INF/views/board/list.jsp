@@ -3,12 +3,15 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix='c' uri='http://java.sun.com/jsp/jstl/core'%>
 <%@ taglib prefix='fmt' uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>  
 <%@include file="../include/header.jsp"%>
             <div class="row">
 	<div class="col-lg-12">
 		<div class="panel panel-default">
 			<div class="panel-heading">Board List Page
+			<sec:authorize access="isAuthenticated()">	
 				<button id = "regBtn" type="button" class="btn btn-xs pull-right">Register New Board</button>
+			</sec:authorize>
 			</div>
 			<!-- /.panel-heading -->
 			<div class="panel-body">
