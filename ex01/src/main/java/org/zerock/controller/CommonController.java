@@ -36,6 +36,7 @@ public class CommonController {
 		log.info("custom logout post");
 		
 	}
-	
+	@GetMapping("/customRegister")
+	public void memberRegister() {}
 	
 }

@@ -1,5 +1,7 @@
 package org.zerock.security;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -13,6 +15,9 @@ import lombok.extern.log4j.Log4j;
 
 @Log4j
 public class CustomUserDetailsService implements UserDetailsService{
+	@Autowired
+	private HttpSession session;
+	
 	
 	@Setter(onMethod_ = @Autowired)
 	private MemberMapper memberMapper;

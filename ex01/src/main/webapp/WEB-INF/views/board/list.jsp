@@ -5,6 +5,7 @@
 <%@ taglib prefix='fmt' uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>  
 <%@include file="../include/header.jsp"%>
+
             <div class="row">
 	<div class="col-lg-12">
 		<div class="panel panel-default">

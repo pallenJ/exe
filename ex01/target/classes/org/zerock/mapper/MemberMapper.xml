@@ -20,5 +20,10 @@
 	SELECT mem.*,auth.auth FROM tbl_member mem LEFT JOIN 
 	tbl_member_auth auth ON mem.userid = auth.userid WHERE mem.userid=#{userid}
 	</select>
-
+	
+	<select id="countSame" resultType="int">
+		
+		SELECT COUNT(*) FROM tbl_member A WHERE A.userid = #{userid}
+	
+	</select>
 </mapper>

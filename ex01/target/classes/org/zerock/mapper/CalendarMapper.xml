@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.zerock.mapper.CalendarMapper">
+	<select id="get" resultType="org.zerock.domain.CalendarVO">
+	SELECT * FROM tb_calendar WHERE cno = #{cno}
+	</select>
+	<select id="getByDay" resultType="org.zerock.domain.CalendarVO">
+	
+		SELECT C.* FROM tb_calendar C WHERE C.cal_date=#{date}
+	
+	</select>
+	<select id="getByMonth" resultType="org.zerock.domain.CalendarVO">
+		
+		<![CDATA[
+			SELECT * FROM tb_calendar C WHERE C.cal_date>=#{startDate} AND C.cal_date<=#{endDate}
+		]]>
+	
+	</select>
+	<select id="getByUserDay" resultType="org.zerock.domain.CalendarVO">
+	SELECT * FROM tb_calendar C WHERE C.userauth = 'ROLE_ADMIN' OR C.userid = #{userid} 
+	</select>
+	
+	
+	<insert id="insert">
+		INSERT INTO tb_calendar(cal_year,cal_month,cal_day,cal_date,cal_holi,cal_title,cal_content) 
+		VALUES(#{newSc.cal_year},#{newSc.cal_month},#{newSc.cal_day},#{newSc.cal_date},#{newSc.cal_holi},#{newSc.cal_title},#{newSc.cal_content}); 
+	
+	</insert>
+	<delete id="delete">
+		DELETE FROM tb_calendar WHERE cno=#{cno}
+	</delete>
+	
+	<delete id="deleteDay">
+		DELETE FROM tb_calendar WHERE cal_date=#{date}
+	</delete>
+	
+	<delete id="deleteMulti">
+		<![CDATA[
+		DELETE FROM tb_calendar WHERE cal_date>=#{startDate} AND cal_date<=#{endDate}
+		]]>
+	</delete>
+	<update id="update">
+		UPDATE tb_calendar SET cal_title=#{upSc.cal_title},cal_content=#{upSc.cal_content} WHERE cno = #{upSc.cno} 
+	</update>
+</mapper>

@@ -43,11 +43,14 @@ public class BoardController {
 	public void register() {
 
  	}
-
+ 
+	
  	@PostMapping("/register")
  	@PreAuthorize("isAuthenticated()")
 	public String register(BoardVO board, RedirectAttributes rttr) {
 		service.register(board);
+		
+		System.out.println("제목 -----------------------"+board.getTitle());
 		rttr.addFlashAttribute("result", "register");
 		return "redirect:/board/list";
 	}

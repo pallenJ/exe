@@ -11,7 +11,7 @@
 </head>
 <body>
 
-	<form role="form" action="/board/register" method="post">
+	<form role="form" action="/board/register" method="post" accept-charset="utf-8" >
 		<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 		<div class="row">
 			<div class="col-lg-12">
