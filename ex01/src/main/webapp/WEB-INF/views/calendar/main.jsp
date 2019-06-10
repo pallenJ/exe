@@ -17,23 +17,14 @@ HashMap<String,List<CalendarVO>> daysMap = (HashMap<String,List<CalendarVO>>)req
 
 <head>
 <meta charset="UTF-8">
+<%@include file="../include/calHeader.jsp"%>   
 
-<link rel="stylesheet"
-	href="https://bootswatch.com/4/journal/bootstrap.css">
-<link rel="stylesheet"
-	href="https://bootswatch.com/4/journal/bootstrap.min.css">
-<link rel="stylesheet"
-	href="https://bootswatch.com/4/journal/_variables.scss">
-<link rel="stylesheet"
-	href="https://bootswatch.com/4/journal/_bootswatch.scss">
 <title>Insert title here</title>
-<!-- <script type="text/javascript" src="/WEB-INF/views/theme/journal.jsp"></script> -->
 <script type="text/javascript" src="/resources/js/calendar.js"></script>
  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
 <style>
  
-
 </style>
 
 
@@ -137,11 +128,11 @@ ${wv.dayOfWeek}
 </table>
 
 
-
 </body>
 <script>
 
 $(document).ready(
+		
 		function () {
 			var nowpage = "/calendar/main";
 			$("th[class^=show-days]").each(function(i, element) {
@@ -166,7 +157,6 @@ $(document).ready(
 				location.href=nowpage+"?ym="+ym+"&f=${param.f}";
 				
 			})
-			
 			
 			$("p[class^=show-days]").click(function() {
 				var date = ($(this).find("input[type='hidden']")).val();
@@ -194,13 +184,6 @@ $(document).ready(
 		});
 </script>
 
-<%-- <sec:authorize access="!isAuthenticated()">	
-<script type="text/javascript">
-location.href = "/customLogin";
-</script>
-</sec:authorize>
-<sec:authorize access="isAuthenticated()">	
-<sec:authentication property="principal.username"/>
-</sec:authorize> --%>
+
   <%@include file="/WEB-INF/views/include/footer.jsp"%>
 </html>

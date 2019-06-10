@@ -6,14 +6,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-<link rel="stylesheet"
-	href="https://bootswatch.com/4/journal/bootstrap.css">
-<link rel="stylesheet"
-	href="https://bootswatch.com/4/journal/bootstrap.min.css">
-<link rel="stylesheet"
-	href="https://bootswatch.com/4/journal/_variables.scss">
-<link rel="stylesheet"
-	href="https://bootswatch.com/4/journal/_bootswatch.scss">
+
+<%@include file="../include/calHeader.jsp"%> 
  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>	
 <meta charset="UTF-8">
 <title>Insert title here</title>
@@ -39,9 +33,19 @@
 			 -->
 			
 <div class="panel-body">
-				<div class="form-group">
+				<div class="form-group" id="show-cno">
 				<label>Cno</label>
 				<input class = "form-control" name="cno" value='<c:out value="${schedule.cno}"></c:out>' readonly="readonly">
+				</div>
+				
+				<div class="form-group" id= "show-userid">
+				<label>ID</label>
+				<input class = "form-control" name="userid" value='<c:out value="${schedule.userid}"></c:out>' readonly="readonly">
+				</div>
+
+				<div class="form-group" id= "show-userauth">
+				<label>ID</label>
+				<input class = "form-control" name="userauth" value='<c:out value="${schedule.userauth}"></c:out>' readonly="readonly">
 				</div>
 				
 				<div class="form-group">
@@ -85,15 +89,26 @@
 <script type="text/javascript">
 	$(document).ready(
 		function() {
-			$('#regBtn').click(function() {
-				$(location).attr("href","register?date=${schedule.cal_date}");
-			});
+		var userid = "${userid}";
+		var userauth = "${userauth}"
+		var writerId = "${schedule.userid}"
+		
 		$("#modify-btn").click(function() {
 			location.href = 'modify?cno=${schedule.cno}';
 		})	
-			
-		}		
-	);
+		
+		if(userauth!="ROLE_ADMIN"){
+		$("#show-cno").hide();
+		$("#show-userid").hide();
+		$("#show-userauth").hide();
+			if(writerId!=userid){
+				$("#modify-btn").hide();
+			}
+		}
+		
+		
+		
+		});
 
 </script>
   <%@include file="/WEB-INF/views/include/footer.jsp"%>

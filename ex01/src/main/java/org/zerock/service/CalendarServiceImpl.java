@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.joda.time.LocalDate;
+import org.mortbay.log.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.zerock.calculate.CalendarDTO;
@@ -11,7 +12,9 @@ import org.zerock.domain.CalendarVO;
 import org.zerock.mapper.CalendarMapper;
 
 import lombok.Setter;
+import lombok.extern.log4j.Log4j;
 
+@Log4j
 @Service
 public class CalendarServiceImpl implements CalendarService{
 	
@@ -34,9 +37,17 @@ public class CalendarServiceImpl implements CalendarService{
 		return CalendarDTO.change(mapper.getByMonth(monthLlist.get(0).toString(), monthLlist.get(monthLlist.size()-1).toString()));
 	}
 	@Override
+	public Map<String,List<CalendarVO>> listByMonth(int year, int month,int startweek,String userid) {
+		List<LocalDate> monthLlist=CalendarDTO.makeDateTimeList(year, month, startweek);
+		log.info(mapper.getByMonthUser(monthLlist.get(0).toString(), monthLlist.get(monthLlist.size()-1).toString(),userid));
+		return CalendarDTO.change(mapper.getByMonthUser(monthLlist.get(0).toString(), monthLlist.get(monthLlist.size()-1).toString(),userid));
+	}
+	
+	@Override
 	public Map<String,List<CalendarVO>> listByMonth(String ym,int startweek) {
 		return listByMonth(Integer.parseInt(ym.substring(0,4)), Integer.parseInt(ym.substring(4,6)),startweek);
 	}
+	
 	
 	@Override
 	public void register(CalendarVO vo) {

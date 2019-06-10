@@ -32,5 +32,4 @@ public class CustomUser extends User{
 
 	
 	
-	
 }

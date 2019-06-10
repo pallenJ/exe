@@ -16,14 +16,24 @@
 		]]>
 	
 	</select>
+	
+	<select id="getByMonthUser" resultType="org.zerock.domain.CalendarVO">
+		
+		<![CDATA[
+			SELECT * FROM tb_calendar C WHERE C.cal_date>=#{startDate} AND C.cal_date<=#{endDate} AND(C.userauth = 'ROLE_ADMIN' OR C.userid = #{userid})
+		]]>
+	
+	</select>
+	
 	<select id="getByUserDay" resultType="org.zerock.domain.CalendarVO">
-	SELECT * FROM tb_calendar C WHERE C.userauth = 'ROLE_ADMIN' OR C.userid = #{userid} 
+	SELECT C.* FROM tb_calendar C WHERE (C.userauth = 'ROLE_ADMIN' OR C.userid = #{userid}) AND C WHERE C.cal_date=#{date}
 	</select>
 	
 	
 	<insert id="insert">
-		INSERT INTO tb_calendar(cal_year,cal_month,cal_day,cal_date,cal_holi,cal_title,cal_content) 
-		VALUES(#{newSc.cal_year},#{newSc.cal_month},#{newSc.cal_day},#{newSc.cal_date},#{newSc.cal_holi},#{newSc.cal_title},#{newSc.cal_content}); 
+		INSERT INTO tb_calendar(cal_year,cal_month,cal_day,cal_date,cal_holi,cal_title,cal_content,userid,userauth) 
+		VALUES(#{newSc.cal_year},#{newSc.cal_month},#{newSc.cal_day},#{newSc.cal_date},#{newSc.cal_holi},
+		#{newSc.cal_title},#{newSc.cal_content},#{newSc.userid},#{newSc.userauth}); 
 	
 	</insert>
 	<delete id="delete">

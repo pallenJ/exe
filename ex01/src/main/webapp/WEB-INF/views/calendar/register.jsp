@@ -7,14 +7,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<link rel="stylesheet"
-	href="https://bootswatch.com/4/journal/bootstrap.css">
-<link rel="stylesheet"
-	href="https://bootswatch.com/4/journal/bootstrap.min.css">
-<link rel="stylesheet"
-	href="https://bootswatch.com/4/journal/_variables.scss">
-<link rel="stylesheet"
-	href="https://bootswatch.com/4/journal/_bootswatch.scss">
+<%@include file="../include/calHeader.jsp"%> 
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <meta charset="UTF-8">
@@ -46,6 +39,8 @@
 							accept-charset="utf-8">
 							<input type="hidden" name="${_csrf.parameterName}"
 								value="${_csrf.token}" />
+							<input type="hidden" name="userid" value="${userid}">	
+							<input type="hidden" name="userauth" value="${userauth}">	
 							<div class="form-group">
 								<label>date</label> <input class="form-control" name="cal_date"
 									type="date" id="date" required="required" value="${date}">

@@ -3,6 +3,7 @@ package org.zerock.controller;
 import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -25,9 +26,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.zerock.domain.CalendarVO;
+import org.zerock.domain.CustomUser;
 import org.zerock.domain.DayInfo;
 import org.zerock.mapper.CalendarMapper;
+import org.zerock.security.CustomUserDetailsService;
 import org.zerock.service.CalendarService;
+import org.zerock.service.MemberService;
 import org.zerock.service.ReadCSV;
 
 import lombok.Setter;
@@ -40,6 +44,8 @@ public class CalendarController {
 	
 	@Setter(onMethod_ = @Autowired)
 	private CalendarService service;
+	@Setter(onMethod_ = @Autowired)
+	private CustomUserDetailsService memberservice;
 	
 	@GetMapping("/googleCalPage")
 	public void googleCal() {
@@ -48,11 +54,18 @@ public class CalendarController {
 	
 	@GetMapping("/main")
 	@PreAuthorize(value="isAuthenticated()") 
-	public void calPage( HttpServletRequest request,Model model) {
+	public void calPage( HttpServletRequest request,Model model,Principal principal) {
+		
+		String userid = principal.getName();
+		CustomUser mem = (CustomUser) memberservice.loadUserByUsername(userid);
+		
+		String userauth = mem.getMember().getAuthList().get(0).getAuth();
+		
 		log.info("calPage");
 		log.info(request.getParameter("ym"));
 		log.info(request.getParameter("f"));
-		
+		log.info("username:"+userid);
+		log.info("userauth:"+userauth);
 		
 		
 		DateTime now = DateTime.now();
@@ -81,8 +94,11 @@ public class CalendarController {
 		 * readCSV.loadFile(); HashMap<String, ArrayList<DayInfo>> hashDayInfo =
 		 * readCSV.toHashData();
 		 */
-		  Map<String,List<CalendarVO>> hashDayInfo = service.listByMonth(year, month,week);
-		 
+		  Map<String,List<CalendarVO>> hashDayInfo = 
+				(userauth.equals("ROLE_ADMIN"))?
+					service.listByMonth(year, month,week):
+						service.listByMonth(year, month,week,principal.getName());
+		  
 		
 			  
 		 
@@ -125,7 +141,6 @@ public class CalendarController {
 	}
 	@PostMapping("/modify")
 	public String modify(CalendarVO vo,Model model) {
-		log.info("modify success:"+service.modify(vo));
 		return "redirect:/calendar/main";
 	}
 	@PostMapping("/remove")
@@ -137,7 +152,6 @@ public class CalendarController {
 	@GetMapping("/{date}")
 	@ResponseBody
 	public List<CalendarVO> getCalList(@PathVariable("date") String date){
-		log.info("ajaxDate:"+date);
 		log.info(service.listByDay(date));
 		return service.listByDay(date);
 	}

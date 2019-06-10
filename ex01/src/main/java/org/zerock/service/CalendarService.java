@@ -24,4 +24,5 @@ List<String> generateWeekList(int week);
 
 boolean modify(CalendarVO vo);
 boolean remove(int cno);
+Map<String, List<CalendarVO>> listByMonth(int year, int month, int startweek, String userid);
 }
