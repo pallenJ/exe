@@ -16,7 +16,7 @@
 <iframe src="https://calendar.google.com/calendar/embed?src=bizspring.co.kr_jqlfoiq74f2dp75qcobm2uonl0%40group.calendar.google.com&ctz=Asia%2FSeoul" style="border: 0" width="800" height="600" frameborder="0" scrolling="no">
 </iframe>
 </div>
-
+ 
 </body>
 <%@include file="/WEB-INF/views/include/footer.jsp"%>
 </html>
