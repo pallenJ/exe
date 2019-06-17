@@ -15,8 +15,7 @@ import lombok.extern.log4j.Log4j;
 
 @Log4j
 public class CustomUserDetailsService implements UserDetailsService{
-	@Autowired
-	private HttpSession session;
+
 	
 	
 	@Setter(onMethod_ = @Autowired)

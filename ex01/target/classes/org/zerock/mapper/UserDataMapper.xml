@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.zerock.mapper.UserDataMapper">
+
+<insert id="insertAll" parameterType="java.util.HashMap">
+INSERT INTO users_data(userid) VALUES
+<foreach collection="data" item="item" separator=" , ">
+(#{item})
+</foreach>
+</insert>
+
+<insert id="insert">
+INSERT INTO users_data(userid) VALUES (#{userid})
+
+</insert>
+
+<select id="selectAll">
+select * from users_data
+
+</select>
+<select id="listAll" resultType="string">
+
+SELECT userid FROM users_data
+
+</select>
+
+<select id="count" resultType="int">
+
+SELECT COUNT(*) FROM users_data
+</select>
+
+<insert id="insertAllBoard" parameterType="hashMap">
+	
+	INSERT INTO tbl_board_50 (title, content, writer,regdate,updateDate) VALUES
+	<foreach collection="data" item="item" separator=" , ">
+(#{item.title}, #{item.content}, #{item.writer},#{item.regdate},#{item.updateDate})
+</foreach>
+
+</insert>
+
+<select id="listByTableName" resultType="org.zerock.domain.BoardVO" parameterType="org.zerock.domain.TableDTO">
+ 
+select * from ${table.tableName}
+
+</select>
+<select id="getListPaging" resultType="org.zerock.domain.BoardVO">
+ 
+select * from ${table.tableName} WHERE
+<include refid="criteria"></include>
+<![CDATA[bno>0]]>
+LIMIT #{cri.pageNum} , #{cri.amount}
+</select>
+
+
+
+<select id="getStatistic" resultType="map">
+SELECT DATE_FORMAT(regdate, #{table.formatType}) AS ${table.formatColumn} ,COUNT(*) AS cnt 
+
+<if test="table.write">
+,writer
+</if>
+
+FROM ${table.tableName} GROUP BY DATE_FORMAT (regdate, #{table.formatType})
+
+<if test="table.write">
+,writer
+</if>
+
+
+</select>
+
+
+<select id="getStatisticMulti" resultType="map">
+SELECT DATE_FORMAT(regdate, #{table.formatType}) AS ${table.formatColumn}
+,DATE_FORMAT(regdate, #{table.formatType2}) AS ${table.formatColumn2}
+ ,COUNT(*) AS cnt FROM ${table.tableName} GROUP BY 
+ DATE_FORMAT (regdate, #{table.formatType}),DATE_FORMAT(regdate, #{table.formatType2})
+
+</select>
+
+
+<select id="getCountPaging" resultType="int">
+SELECT COUNT(*) FROM ${table.tableName} WHERE
+<include refid="criteria"></include>
+<![CDATA[bno>0]]>
+
+</select>
+
+<select id="getBrdStatistics" resultType="org.zerock.domain.sta.StatisticsVO" parameterType="org.zerock.domain.TableDTO">
+SELECT writer,COUNT(*) AS bcnt FROM tbl_board_10 GROUP BY writer
+</select>
+
+
+
+
+	<sql id ="criteria">
+
+ 		<trim prefix="(" suffix=") AND" prefixOverrides="OR">
+
+ 				<foreach item="type" collection="cri.typeArr">
+
+ 					<trim prefix="OR">
+
+ 						<choose>
+
+ 							<when test="type=='T'.toString()">title   like CONCAT('%',#{cri.keyword},'%')</when>
+							<when test="type=='C'.toString()">content like CONCAT('%',#{cri.keyword},'%')</when>
+							<when test="type=='W'.toString()">writer  like CONCAT('%',#{cri.keyword},'%')</when>
+						</choose>			
+
+ 					</trim>
+
+ 				</foreach>
+
+ 			</trim>
+
+ 	</sql>
+
+
+</mapper>

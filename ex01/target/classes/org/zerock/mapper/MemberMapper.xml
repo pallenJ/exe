@@ -26,4 +26,8 @@
 		SELECT COUNT(*) FROM tbl_member A WHERE A.userid = #{userid}
 	
 	</select>
+	<select id ="allIdList" resultType="String">
+		SELECT M.userid FROM tbl_member M
+	</select>
+	
 </mapper>

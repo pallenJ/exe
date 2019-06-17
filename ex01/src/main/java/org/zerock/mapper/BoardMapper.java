@@ -3,6 +3,7 @@ package org.zerock.mapper;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
+import org.springframework.dao.support.DaoSupport;
 import org.zerock.domain.BoardVO;
 import org.zerock.domain.Criteria;
 

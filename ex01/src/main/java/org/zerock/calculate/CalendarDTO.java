@@ -12,13 +12,14 @@ import org.joda.time.format.DateTimeFormatter;
 import org.zerock.domain.CalendarVO;
 
 import lombok.extern.log4j.Log4j;
-
+/*
+ * 달력 관련 계산을 위한 메소드
+ * CalendarDto와는 별개의 메소드
+ */
 @Log4j
 public class CalendarDTO{
-
-
 	
-	public static List<List<LocalDate>> getLocalArr(int year, int month,int startweek){
+	public static List<List<LocalDate>> getLocalArr(int year, int month,int startweek){//화면단에 뿌릴 날짜 계산 로직, 줄바꿈을 위해서 이중리스트
 		List<List<LocalDate>> result = new ArrayList<>();
 		List<LocalDate> tmp   = makeDateTimeList(year, month, startweek);
 		int last = tmp.size()>=42?6:5;
@@ -27,15 +28,13 @@ public class CalendarDTO{
 			result.add(tmp.subList(7*i, 7*(i+1))) ; 
 		}
 		
-		
-		
 		return result;
 		
 	}
 	
 	
 
-	public static List<LocalDate> makeDateTimeList(int year, int month,int startweek) {
+	public static List<LocalDate> makeDateTimeList(int year, int month,int startweek) {// 위의 메소드를 계산하기전 단순 날짜 리스트를 가져오는 메소드
 	   ArrayList<LocalDate> listDay = new ArrayList<>();
 		
 	    LocalDate date = new LocalDate(year, month, 1);
@@ -43,7 +42,7 @@ public class CalendarDTO{
 		
 		LocalDate lastDay = date.dayOfMonth().withMaximumValue();
 		
-		int weekOfDay = date.getDayOfWeek()-startweek+1;
+		int weekOfDay = date.getDayOfWeek()-startweek+1;//이전달 표기를 위한 메소드
 		if(weekOfDay<0) weekOfDay+=7;
 		date = date.plusDays(-weekOfDay);
 

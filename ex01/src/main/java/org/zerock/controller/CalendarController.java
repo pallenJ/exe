@@ -1,12 +1,7 @@
 package org.zerock.controller;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.security.Principal;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
+
 import java.util.List;
 import java.util.Map;
 
@@ -27,12 +22,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.zerock.domain.CalendarVO;
 import org.zerock.domain.CustomUser;
-import org.zerock.domain.DayInfo;
-import org.zerock.mapper.CalendarMapper;
 import org.zerock.security.CustomUserDetailsService;
 import org.zerock.service.CalendarService;
-import org.zerock.service.MemberService;
-import org.zerock.service.ReadCSV;
 
 import lombok.Setter;
 import lombok.extern.log4j.Log4j;
@@ -45,7 +36,7 @@ public class CalendarController {
 	@Setter(onMethod_ = @Autowired)
 	private CalendarService service;
 	@Setter(onMethod_ = @Autowired)
-	private CustomUserDetailsService memberservice;
+	private CustomUserDetailsService customUserDetailsservice;
 	
 	@GetMapping("/googleCalPage")
 	public void googleCal() {
@@ -57,7 +48,7 @@ public class CalendarController {
 	public void calPage( HttpServletRequest request,Model model,Principal principal) {
 		
 		String userid = principal.getName();
-		CustomUser mem = (CustomUser) memberservice.loadUserByUsername(userid);
+		CustomUser mem = (CustomUser) customUserDetailsservice.loadUserByUsername(userid);
 		
 		String userauth = mem.getMember().getAuthList().get(0).getAuth();
 		
@@ -141,6 +132,7 @@ public class CalendarController {
 	}
 	@PostMapping("/modify")
 	public String modify(CalendarVO vo,Model model) {
+		log.info("modify:"+service.modify(vo));
 		return "redirect:/calendar/main";
 	}
 	@PostMapping("/remove")

@@ -27,7 +27,7 @@ import lombok.extern.log4j.Log4j;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration({
 	"file:src/main/webapp/WEB-INF/spring/root-context.xml"
-	//,"file:src/main/webapp/WEB-INF/spring/security-context.xml"
+	,"file:src/main/webapp/WEB-INF/spring/security-context.xml"
 })
 @Log4j
 public class CalendarTest {
@@ -107,9 +107,8 @@ public class CalendarTest {
 		 //log.info(mapper.deleteDay("2019-01-01"));
 		//log.info(mapper.deleteMulti("2019-05-11", "2019-06-04"));
 		//log.info(mapper.delete(4));
-		CalendarVO vo = mapper.get(10);
-		vo.setCal_content("c");
-		log.info(mapper.update(vo));
+		CalendarVO vo = mapper.get(11);
+		log.info(vo);
 		/*
 		 * List<List<String>>asdf= new ArrayList<List<String>>(); List<String> list =
 		 * service.makeMonthDayList(2019, 5); asdf.add(list.subList(0, 7));
