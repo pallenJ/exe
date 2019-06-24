@@ -10,11 +10,13 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import java.util.Set;
 import java.util.TreeMap;
+import java.util.TreeSet;
 
 import javax.sql.DataSource;
 
@@ -22,7 +24,6 @@ import org.apache.ibatis.session.SqlSession;
 import org.joda.time.DateTime;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mortbay.jetty.servlet.AbstractSessionManager.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -31,6 +32,7 @@ import org.zerock.domain.Criteria;
 import org.zerock.domain.MemberVO;
 import org.zerock.domain.TableDTO;
 import org.zerock.security.MemberTest;
+import org.zerock.service.sta.StaService;
 
 import lombok.Setter;
 import lombok.extern.log4j.Log4j;
@@ -46,7 +48,10 @@ public class MemberMapperTest {
 
 	@Setter(onMethod_ = @Autowired)
 	private UserDataMapper umapper;
-
+	
+	@Setter(onMethod_ = @Autowired)
+	private StaService staService;
+	
 	@Setter(onMethod_ = @Autowired)
 	SqlSession sqlSession;
 
@@ -54,10 +59,30 @@ public class MemberMapperTest {
 
 	@Test
 	public void test04() {
-		TableDTO tdto = new TableDTO("tbl_board_10",TableDTO.D,TableDTO.H);
-		tdto.setWrite(true);
-		List<?> aaa = umapper.getStatistic(tdto);
-		aaa.forEach(e->log.info(e));
+		
+		
+		  TableDTO tdto = new TableDTO("tbl_board_10",TableDTO.YMD,TableDTO.H);
+		  Map<String,Map<String,Object>>maps = new TreeMap<String,Map<String,Object>>(staService.getStatisticsMap(tdto));
+		  
+		  
+		  
+		  for (String key : maps.keySet()) {
+		      System.out.print(key+"||");
+		      
+		      Map<String,Object> valueMap = maps.get(key);
+		      Set<String> keySet = new TreeSet<String>(valueMap.keySet());
+		      
+		      for (String string : keySet) {
+				System.out.print(valueMap.get(string)+"|");
+			}
+		      System.out.println();
+		  }
+		 
+		/*
+		 * Set<String> set = new TreeSet<String>(); int i = 1; while(i<20) {
+		 * set.add(String.format("%02d", i)); i++; } for (String string : set) {
+		 * log.info(string); }
+		 */
 	}
 
 	// @Test
@@ -206,9 +231,7 @@ public class MemberMapperTest {
 
 				fw.write(userid);
 				fw.newLine();
-				/*
-				 * if ((i + 1) % 20 == 0) { }
-				 */
+				
 			}
 
 		} catch (Exception e) {
@@ -217,6 +240,25 @@ public class MemberMapperTest {
 		}
 
 	}
+	/*
+	 * public void createCSV(String filepath, String title,List<BoardVO>
+	 * boardList,int cols) {
+	 * 
+	 * try (BufferedWriter fw = new BufferedWriter(new FileWriter(filepath + "/" +
+	 * title + ".csv", true));) { for (BoardVO vo:boardList) { for (int j = 0; j <
+	 * array.length; j++) {
+	 * 
+	 * } String userid = "	user" + String.format("%0" + cnt10 + "d", i + 1);
+	 * 
+	 * fw.write(userid); fw.newLine();
+	 * 
+	 * }
+	 * 
+	 * } catch (Exception e) { // TODO: handle exception
+	 * System.out.println("error"); }
+	 * 
+	 * }
+	 */
 
 	public void createBoardData() {
 		Random rd = new Random();

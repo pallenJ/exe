@@ -1,5 +1,8 @@
 package org.zerock.domain;
 
+import java.util.HashMap;
+import java.util.List;
+
 import org.zerock.service.sta.StaService;
 
 import lombok.Data;
@@ -9,7 +12,7 @@ public class TableDTO {
 	
 	private final String [] types = {"%Y-%m-%d","%H","%a","%U","%u","%d-%H","%w","%d"};
 	public static final int YMD = 0,H = 1,A=2,U_l=3,U_s=4,D_H=5,W=6,D=7;
-	
+	public HashMap<String, List <String>> colList;
 	
 	public TableDTO(String tableName,int type1,int type2) {
 		super();
@@ -44,16 +47,20 @@ public class TableDTO {
 	
 	public void SetFormatType(int type) {
 		this.formatType = types[type];
-		if(type==H) { formatColumn2 = "stathour";}else {
-			formatColumn="statdate";
-		}
+		this.formatColumn = "stat" + (type==H?"hour":"date");
 	}
 	
 	public void SetFormatType2(int type) {
-		this.formatType2 = types[type];
-		if(type==H) { formatColumn2 = "stathour";}else {
-			formatColumn2 ="statdate";
-		}
+		this.formatType2   = types[type];
+		this.formatColumn2 = "stat" + (type==H?"hour":"date");
+	}
+	
+	public void SetFormatType(String type) {
+		this.formatType = type;
+	}
+	
+	public void SetFormatType2(String type) {
+		this.formatType2 = type;
 	}
 	
 	private String tableName;

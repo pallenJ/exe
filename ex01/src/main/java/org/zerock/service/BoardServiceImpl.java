@@ -6,8 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.zerock.domain.BoardVO;
 import org.zerock.domain.Criteria;
+import org.zerock.domain.SimpleTableDTO;
 import org.zerock.domain.TableDTO;
 import org.zerock.mapper.BoardMapper;
+import org.zerock.mapper.SimpleCustomMapper;
 
 import lombok.Setter;
 import lombok.extern.log4j.Log4j;
@@ -19,6 +21,9 @@ public class BoardServiceImpl implements BoardService{
 	
 	@Setter(onMethod_ = {@Autowired})
 	BoardMapper mapper;
+	
+	@Setter(onMethod_ = {@Autowired})
+	SimpleCustomMapper scMapper;
 	
 	@Override
 	public void register(BoardVO board) {
@@ -65,7 +70,12 @@ public class BoardServiceImpl implements BoardService{
 		// TODO Auto-generated method stub
 		return mapper.searchCount(cri);
 	}
-	
-
+	@Override
+	public int replyCnt(long bno) {
+			
+			return Integer.parseInt(
+					scMapper.getCustomListOne(new SimpleTableDTO("tbl_board","replyCnt","bno",bno+"")));
+		
+	}
 
 }

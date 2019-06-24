@@ -2,6 +2,7 @@
 <%@ page session="false" %>
 <html>
 <jsp:forward page="/board/list"></jsp:forward>
+<%-- <jsp:forward page="/sta/staPage"></jsp:forward> --%>
 <head>
 	<title>Home</title>
 </head>

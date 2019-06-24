@@ -25,7 +25,6 @@ public class ReplyServiceImpl implements ReplyService{
 	private BoardMapper boardMapper;
 	
 	
-	//@Transactional
 	@Override
 	public int register(ReplyVO vo) {
 		// TODO Auto-generated method stub

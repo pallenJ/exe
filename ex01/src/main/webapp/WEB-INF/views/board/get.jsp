@@ -176,9 +176,11 @@ $(document).ready(function () {
 		<div class="panel panel-default">
 			<div class="panel-heading">
 				<i class = "fa fa-comment fa-fw"></i>Reply
-				 <b style="size: 4"> [<c:out value="${board.replyCnt}"></c:out>]
+				
+				 <b style="size: 4" id="reply-count"> 
 				
 				 </b>
+				
 				<sec:authorize access="isAuthenticated()">	
 				<button id = 'addReplyBtn' class = 'btn btn-primary btn-xs pull-right'>New Reply</button>
 				</sec:authorize>
@@ -251,7 +253,9 @@ $(document).ready(function () {
 								
 								replyUL.html(str);
 								showReplyPage(replyCnt);
+								$("#reply-count").text(replyCnt);
 							})
+							
 						}//end showList
 						
 					
@@ -289,6 +293,7 @@ $(document).ready(function () {
 					
 					/* remove */
 					$("#modalRegisterBtn").click(function() {
+						
 						var reply = {
 								reply: modalInputReply.val(),
 								replyer: modalInputReplyer.val(),
@@ -309,7 +314,6 @@ $(document).ready(function () {
 					modalModeBtn.click(function(e) {
 						var originalReplyer = modalInputReplyer.val();
 						var reply = {rno:modal.data("rno"), reply: modalInputReply.val(),replyer:originalReplyer};
-						
 						if(!replyer){
 							alert("로그인 후에 수정 가능합니다");
 							modal.modal("hide");
@@ -344,7 +348,6 @@ $(document).ready(function () {
 							modal.modal("hide");
 							return;							
 						}
-
 						modal.modal("hide");
 						
 						replyService.remove(rno,originalReplyer, function(result) {

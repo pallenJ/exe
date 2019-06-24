@@ -31,7 +31,6 @@ public class BasicDAO {
 	public <E> List<E> list(String queryId,Object parameter){
 		return sqlSession.selectList(statement+"."+queryId, parameter);
 	}
-
 	
 	
 }

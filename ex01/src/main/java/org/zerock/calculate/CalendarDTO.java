@@ -14,7 +14,6 @@ import org.zerock.domain.CalendarVO;
 import lombok.extern.log4j.Log4j;
 /*
  * 달력 관련 계산을 위한 메소드
- * CalendarDto와는 별개의 메소드
  */
 @Log4j
 public class CalendarDTO{

@@ -11,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.zerock.data.UserTest;
+import org.zerock.domain.SimpleTableDTO;
+import org.zerock.domain.TableDTO;
 import org.zerock.service.MemberService;
 
 import lombok.Setter;
@@ -30,6 +32,8 @@ public class MemberTest {
 	@Setter(onMethod_ = @Autowired)
 	private MemberService service;
 	
+	@Setter(onMethod_ = @Autowired)
+	private SimpleCustomMapper scMapper;
 	/*
 	 * @Test public void countTest() { log.info(service.canUse("afdsf"));
 	 * 
@@ -37,14 +41,17 @@ public class MemberTest {
 	 */
 	@Test 
 	public void idtest() {
-		UserTest ut = new UserTest(mapper.allIdList());
-		 Map<String,List<String>> temp = ut.extractByHour();
-		  
-		  for(Iterator<String> iterator= new TreeMap<String,List<String>>(temp).keySet().iterator();iterator.hasNext();) {
-			  	String key = iterator.next();
-			  	List<String> tlist = temp.get(key);
-			  	System.out.println(key+"("+tlist.size()+")"+":"+tlist);
-			  }
+		
+		log.info(scMapper.getCustomListOne(new SimpleTableDTO("tbl_board","replyCnt","bno","295")));
+		/*
+		 * UserTest ut = new UserTest(mapper.allIdList()); Map<String,List<String>> temp
+		 * = ut.extractByHour();
+		 * 
+		 * for(Iterator<String> iterator= new
+		 * TreeMap<String,List<String>>(temp).keySet().iterator();iterator.hasNext();) {
+		 * String key = iterator.next(); List<String> tlist = temp.get(key);
+		 * System.out.println(key+"("+tlist.size()+")"+":"+tlist); }
+		 */
 		  
 		//mapper.allIdList().forEach(e->log.info(e));
 	}

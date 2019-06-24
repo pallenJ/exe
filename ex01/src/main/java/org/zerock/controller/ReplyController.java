@@ -36,9 +36,9 @@ public class ReplyController {
 	@PreAuthorize("isAuthenticated()")
 	@PostMapping(value = "/new", consumes = "application/json", produces = { MediaType.TEXT_PLAIN_VALUE })
 	public ResponseEntity<String> create(@RequestBody ReplyVO vo) {
-		log.info("rVO:" + vo);
+		//log.info("rVO:" + vo);
 		int insertCount = service.register(vo);
-		log.info("Ins cnt:" + insertCount);
+		//log.info("Ins cnt:" + insertCount);
 		return insertCount == 1 ? new ResponseEntity<>("success", HttpStatus.OK)
 				: new ResponseEntity<>("success", HttpStatus.INTERNAL_SERVER_ERROR);
 	}
@@ -48,10 +48,14 @@ public class ReplyController {
 	public ResponseEntity<ReplyPageDTO> getList(@PathVariable("page") int page, @PathVariable("bno") Long bno) {
 		 
 		Criteria cri = new Criteria(page, 10);
-		return new ResponseEntity<>(service.getListPage(cri, bno), HttpStatus.OK);
+		ReplyPageDTO rdto = service.getListPage(cri, bno);
+		//log.info(rdto.getList().size());
+		return new ResponseEntity<>(rdto, HttpStatus.OK);
 	
 	}
+	//////////////////////
 	
+	///////////////
 	@GetMapping(value = "/{rno}", produces = {
 	MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_UTF8_VALUE		
 	})

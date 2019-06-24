@@ -33,5 +33,5 @@ public interface UserDataMapper {
 	
 	public List<?> getStatistic(@Param("table") TableDTO table);
 	public List<?> getStatisticMulti(@Param("table") TableDTO table);
-
+	public List<String> getStaticTitles(@Param("table") TableDTO table);
 }

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.zerock.mapper.SimpleCustomMapper">
+
+<select id="getCustomCnt" resultType="int">
+
+SELECT COUNT(*) FROM ${table.tableName}
+
+</select>
+
+
+
+<select id="getCustomListCol" resultType="string">
+
+SELECT ${table.col} FROM ${table.tableName}
+
+</select>
+
+<select id="getCustomListOne" resultType="string">
+
+SELECT ${table.col} FROM ${table.tableName} where ${table.wcol} = #{table.num}
+
+</select>
+
+<select id="getCustomList" resultType="map">
+
+SELECT * FROM ${table.tableName}
+
+</select>
+
+
+
+</mapper>

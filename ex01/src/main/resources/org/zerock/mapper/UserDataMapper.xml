@@ -51,8 +51,6 @@ select * from ${table.tableName} WHERE
 LIMIT #{cri.pageNum} , #{cri.amount}
 </select>
 
-
-
 <select id="getStatistic" resultType="map">
 SELECT DATE_FORMAT(regdate, #{table.formatType}) AS ${table.formatColumn} ,COUNT(*) AS cnt 
 
@@ -62,11 +60,17 @@ SELECT DATE_FORMAT(regdate, #{table.formatType}) AS ${table.formatColumn} ,COUNT
 
 FROM ${table.tableName} GROUP BY DATE_FORMAT (regdate, #{table.formatType})
 
+
 <if test="table.write">
 ,writer
 </if>
 
 
+</select>
+
+<select id="getStaticTitles" resultType="string">
+SELECT DATE_FORMAT(regdate,#{table.formatType}) AS ${table.formatColumn} 
+FROM ${table.tableName} GROUP BY DATE_FORMAT(regdate,#{table.formatType})
 </select>
 
 

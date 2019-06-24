@@ -34,7 +34,6 @@ HashMap<String,List<CalendarVO>> daysMap = (HashMap<String,List<CalendarVO>>)req
 
 <h1>달력</h1>
 
-
 <div align="center">
 <h2>
 <button class ="btn btn-primary" name="prevCal"> ◀ </button>

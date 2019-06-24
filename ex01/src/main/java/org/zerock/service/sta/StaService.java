@@ -1,6 +1,10 @@
 package org.zerock.service.sta;
 
 import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
+
+import javax.servlet.http.HttpServletResponse;
 
 import org.zerock.domain.BoardVO;
 import org.zerock.domain.Criteria;
@@ -16,4 +20,6 @@ public interface StaService {
 	public List<BoardVO> getList(TableDTO tableDTO,Criteria cri);
 	public int count(TableDTO tableDTO,Criteria cri);
 	List<?> getStatistics(boolean multi, TableDTO table);
+	public void poiMaker(HttpServletResponse response,List<Map<String, Object>> datas,String title,boolean multi) throws Exception;
+	Map<String,Map<String, Object>> getStatisticsMap(TableDTO table);
 }

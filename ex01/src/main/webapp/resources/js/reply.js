@@ -12,6 +12,7 @@ var replyService = (function () {
 				  contentType: "application/json; charset=utf-8",
 				  success: function(result, status, xhr){
 					  if(callback){
+						  alert(result)
 						  callback(result);
 					  }
 				  },
@@ -29,6 +30,7 @@ var replyService = (function () {
 		function getList(param , callback, error) {
 			
 			var bno  = param.bno;
+			
 			var page = param.page || 1;
 			
 			$.getJSON("/replies/pages/"+bno+"/"+page+".json", 
@@ -101,6 +103,21 @@ var replyService = (function () {
 			
 		}
 		////////////////////////get end
+		function getCnt(bno){
+			$.ajax({
+				type: "GET",
+				url: "/board/rcnt",
+				data : {"bno" : bno},
+				success: function(data) {
+					alert(data)
+				},
+				error : function() {
+					alert("error")
+				}
+				
+			});
+		}
+		
 		
 		function bigger9(data){
 			return (data>9?'':'0')+data;
@@ -141,7 +158,7 @@ var replyService = (function () {
 		,update : update
 		,get : get
 		,displayTime : displayTime
-		
+		,getCnt : getCnt
 		};
 	
 	})();

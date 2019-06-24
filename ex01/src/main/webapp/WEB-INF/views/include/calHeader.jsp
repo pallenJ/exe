@@ -33,8 +33,3 @@ location.href = "/customLogin";
 <sec:authentication property="principal.member.authList[0].auth" var="userauth"/>
 </sec:authorize>	
  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>	
-<script>
-/* alert($("#authValue")); */
-
-/*  alert("${userauth}") */
-</script>

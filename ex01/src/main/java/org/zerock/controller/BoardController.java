@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.zerock.domain.BoardVO;
 import org.zerock.domain.Criteria;
@@ -57,6 +58,8 @@ public class BoardController {
 
  	@GetMapping({ "/get", "/modify" })
 	public void get(@RequestParam("bno") Long bno, Model model) {
+ 		log.info(bno);
+ 		//log.info("rcnt:"+service.replyCnt(bno));
 		model.addAttribute("board", service.get(bno));
 	}
  	
@@ -89,5 +92,12 @@ public class BoardController {
 
 		return "redirect:/board/list";
 	}
-
+ 	
+	
+	  @GetMapping("/rcnt")
+	  @ResponseBody public int replyCnt(long bno) {
+		  return service.replyCnt(bno);
+	  }
+	 
+ 	
  }

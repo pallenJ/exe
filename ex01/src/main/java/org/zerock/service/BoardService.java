@@ -19,4 +19,6 @@ public interface BoardService {
 	
 	public int count();
 	public int count(Criteria cri);
+
+	int replyCnt(long bno);
 }
