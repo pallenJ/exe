@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="egovframework.sqlmap.example.mappers.TestMapper">
+<select id="timeTest" resultType="string">
+SELECT NOW();
+</select>
+<select id="tblCnt" resultType="int" parameterType="egovframework.example.dto.TableDTO">
+SELECT COUNT(*) FROM ${tableName}
+</select>
+
+</mapper>

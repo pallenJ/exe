@@ -30,9 +30,19 @@ public class TableDTO {
 		try {
 			SetFormatType(type);
 		} catch (Exception e) {
+		if(type>=types.length) {
+			SetMulti(type);
+		}else {
 			this.formatType = types[YMD];			
+			
+			}
 		}
+		
+		
+		
 	}
+	
+	
 	public TableDTO(String tableName) {
 		super();
 		this.tableName = tableName;
@@ -43,6 +53,23 @@ public class TableDTO {
 		super();
 		this.tableName = StaService.BOARD_10;
 		this.formatType = types[YMD];		
+	}
+	public void SetMulti(int type) {
+		switch (type) {
+		case 10:
+			setWrite(true);
+			SetFormatType(YMD);
+			break;
+		
+		case 100:
+			SetFormatType(YMD);
+			SetFormatType2(H);
+			break;
+
+		default:
+			break;
+		}
+		
 	}
 	
 	public void SetFormatType(int type) {

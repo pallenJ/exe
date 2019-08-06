@@ -49,11 +49,11 @@ public class StaController {
 	StaService staService;
 	@Setter
 	private TableDTO tableDTO = new TableDTO(StaService.BOARD_10);
-	
+
 	@Setter
 	@Getter
-	private List<Map<String,Object>>forPoi;
-	
+	private List<Map<String, Object>> forPoi;
+
 	@GetMapping
 	public void main(HttpServletRequest request, Criteria cri, Model model) {
 		// int cnt = staService.count(tableDTO,cri);
@@ -68,48 +68,45 @@ public class StaController {
 	}
 
 	@GetMapping("staPage")
-	public void stapage(HttpServletRequest request,Model model) {
+	public void stapage(@RequestParam(name = "tableName", defaultValue = StaService.BOARD_10) String tableName,
+			@RequestParam(name = "ftNum", defaultValue = "0") int ftNum, Model model) {
 
-			boolean multi = false;
-		  TableDTO table = new TableDTO(); try { 
-			  log.info("1");
-		  String tableName = (String)request.getParameter("tableName"); 
-		  
-		  int ftnum = Integer.parseInt(request.getParameter("ftNum"));
-		  
-		  log.info(tableName+"/"+ftnum);
-		  if(ftnum==10) {
-			  table = new TableDTO(tableName, TableDTO.YMD,TableDTO.H);
-			  multi = true;
-			//---
-		  }else if(ftnum<10&&tableName!=null&&!tableName.equals("")) { 
-			  table = new TableDTO(tableName, ftnum); 
-		  }else if(ftnum==100) {
-			  table = new TableDTO(tableName, TableDTO.YMD);
-			  table.setWrite(true);
-		  } 
-		  
-		  } catch (Exception e) { }
-		  	@SuppressWarnings("unchecked")
-			List<Map<String,Object>>list = (List<Map<String,Object>>)(staService.getStatistics(multi, table));
-		  	
-		  	Set<String> titles = multi?new TreeSet<String>(list.get(0).keySet()):list.get(0).keySet();
-		  	
-		  	model.addAttribute("datas", list);
-		    model.addAttribute("titles", titles);
-		    
-		    setForPoi(list);
-	    	}
-	
-	@GetMapping("poiTest")
-	public void poitest(HttpServletResponse response/* ,@RequestParam("datas") List<?> datas */,String tableName,int ftNum) throws Exception{
-		staService.poiMaker(response,getForPoi(),tableName+"_data",ftNum==10);
+		boolean multi = ftNum == 10;
 		
-	}
-	
+		TableDTO table;
+		
+		log.info("1");
 
-	
-}//---
+		log.info(tableName + "/" + ftNum);
+
+		if (multi) {
+			table = new TableDTO(tableName, TableDTO.YMD, TableDTO.H);
+		} else if (ftNum == 100) {
+			table = new TableDTO(tableName, TableDTO.YMD);
+			table.setWrite(true);
+		} else {
+			table = new TableDTO(tableName, ftNum);
+		}
+
+		@SuppressWarnings("unchecked")
+		List<Map<String, Object>> list = (List<Map<String, Object>>) (staService.getStatistics(multi, table));
+
+		Set<String> titles = multi ? new TreeSet<String>(list.get(0).keySet()) : list.get(0).keySet();
+
+		model.addAttribute("datas", list);
+		model.addAttribute("titles", titles);
+
+		setForPoi(list);
+	}
+
+	@GetMapping("poiTest")
+	public void poitest(HttpServletResponse response/* ,@RequestParam("datas") List<?> datas */, String tableName,
+			int ftNum) throws Exception {
+		staService.poiMaker(response, getForPoi(), tableName + "_data", ftNum == 10);
+
+	}
+
+}// ---
 
 /*
  * @SuppressWarnings("unchecked") List<Map<String,Object>> staList =

@@ -8,6 +8,8 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
 import java.util.TreeSet;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -91,21 +93,15 @@ public class StaServiceImpl implements StaService{
 		List<Map<String, Object>> stalist = (List<Map<String, Object>>) umapper.getStatisticMulti(table);
 		Map<String, Map<String,Object>> rs = new TreeMap<String, Map<String,Object>>();
 		
-		String k1 = table.getFormatColumn(), k2 = table.getFormatColumn2();
-		
-		for (Map<String, Object> map : stalist) {
-			//log.info(map);
-			
-			String key = (String)map.get(k1);
-			if(!rs.containsKey(key)) {
-				rs.put(key, new HashMap<String, Object>());
-			}
-			String key2 = (String)map.get(k2);
-			Map<String, Object> temp = rs.get(key);
-			temp.put(key2, map.get("cnt"));
-			rs.replace(key, temp);
-		}
-		
+		  String k1 = table.getFormatColumn(), k2 = table.getFormatColumn2();
+		  
+		  for (Map<String, Object> map : stalist) { //log.info(map);
+		  
+		  String key = (String)map.get(k1); if(!rs.containsKey(key)) { rs.put(key, new
+		  HashMap<String, Object>()); } String key2 = (String)map.get(k2); Map<String,
+		  Object> temp = rs.get(key); temp.put(key2, map.get("cnt")); rs.replace(key,
+		  temp); }
+		 
 		return rs;  
 	}
 

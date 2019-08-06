@@ -23,22 +23,7 @@
 		<property name="password" value = "pjmpjm"></property>
 	
 	</bean>	
-	
-<!-- 	
-	<bean id="hikariConfig" class="com.zaxxer.hikari.HikariDataSource" destroy-method="close">
-	
-		<property name="driverClassName" value="com.mysql.jdbc.Driver"></property>
-		<property name="jdbcUrl" value="jdbc:mysql://127.0.0.1:3306/exe00?useSSL=false&amp;serverTimezone=UTC"></property>
-		<property name="username" value="pjm"></property>
-		<property name="password" value="pjmpjm"></property>
-	
-	</bean>
- -->	
-	<!-- HikariCP Config -->
-	<!-- <bean id="dataSource" class="com.zaxxer.hikari.HikariDataSource" destroy-method="close">
-		<constructor-arg ref="hikariConfig" />
-	</bean>
-	 -->
+
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
 		<property name="dataSource" ref="dataSource"></property>
 	</bean>

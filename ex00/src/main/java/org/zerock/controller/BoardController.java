@@ -2,7 +2,6 @@ package org.zerock.controller;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -32,9 +31,6 @@ public class BoardController {
 	@GetMapping("/list")
 	public void list(Criteria cri, HttpServletRequest request, Model model) {
 		model.addAttribute("list", service.getList(cri));
-		/*
-		 * PageDTO pdto = new PageDTO(123, cri); pdto.setStartPage((pageNum-1)*10);
-		 */
 		log.info(cri.getKeyword());
 		model.addAttribute("pageMaker", new PageDTO(service.count(), cri));
 	}

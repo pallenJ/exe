@@ -60,7 +60,17 @@
  		<![CDATA[bno>0]]>
 	
 	</select>
+
 	
+	<select id="getRcounts" resultType = "map">
+		SELECT C.bno, COUNT(*) AS rcnt FROM 
+		(SELECT A.bno AS bno,B.rno AS rno FROM tbl_board A , tbl_reply B WHERE A.bno = B.bno) C GROUP BY C.bno
+	</select>
+	 
+
+	<select id="getRcount" resultType = "int">
+	SELECT COUNT(*) FROM tbl_board A , tbl_reply B WHERE A.bno =B.bno AND A.bno = #{bno}
+	</select> 
 	 
 	<sql id ="criteria">
 

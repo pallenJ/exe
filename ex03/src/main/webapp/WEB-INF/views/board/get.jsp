@@ -167,7 +167,7 @@ $(document).ready(function () {
 	<div class="col-lg-12">
 		<div class="panel panel-default">
 			<div class="panel-heading">
-				<i class = "fa fa-comment fa-fw"></i>Reply
+				<i class = "fa fa-comment fa-fw"></i>Reply	<a style="color: red" id = "reply-Cnt"></a>
 				<button id = 'addReplyBtn' class = 'btn btn-primary btn-xs pull-right'>New Reply</button>
 			</div>
 			<!-- /.panel-heading -->
@@ -238,6 +238,7 @@ $(document).ready(function () {
 								
 								replyUL.html(str);
 								showReplyPage(replyCnt);
+								$("#reply-Cnt").text("["+replyCnt+"]");
 							})
 						}//end showList
 						

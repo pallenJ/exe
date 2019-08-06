@@ -1,6 +1,8 @@
 package org.zerock.service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -67,8 +69,20 @@ public class BoardServiceImpl implements BoardService{
 	
 	  @Override public int count(Criteria cri) { // TODO Auto-generated method stub
 	  return mapper.searchCount(cri); }
-	 
 
+	@Override
+	public Map<String, Integer> rcounts() {
+		// TODO Auto-generated method stub
+		return listToMap(mapper.getRcounts(), "bno", "rcnt");
+	}
+	 
+	private Map<String,Integer> listToMap(List<Map<String,String>> list,String k1,String k2){
+		Map<String,Integer> rs = new HashMap<>();
+		for (Map<String, String> map : list) {
+			rs.put(map.get(k1), Integer.parseInt(map.get(k2)));
+		}
+		return rs;
+	}
 	
 
 

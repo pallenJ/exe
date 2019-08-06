@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="egovframework.sqlmap.example.mappers.SimplyMapper">
+
+<select id="simpleList" resultType="list" parameterType="egovframework.example.dto.TableDTO">
+SELECT * FROM ${tableName}
+</select>
+
+<select id = "simpleSelect" resultType="map" parameterType="hashMap">
+SELECT * FROM ${table.tableName} 
+WHERE ${col} = #{val}
+
+</select>
+
+<insert id="simpleInsert" parameterType="hashMap">
+INSERT INTO ${table.tableName}
+(
+<foreach collection="data" index="" separator=" , ">
+
+</foreach>
+)
+</insert>
+
+</mapper>

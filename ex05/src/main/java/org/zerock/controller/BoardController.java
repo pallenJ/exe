@@ -29,10 +29,12 @@ public class BoardController {
 	@GetMapping("/list")
 	public void list(HttpServletRequest request,Criteria cri, Model model) {
 		PageDTO pdto = new PageDTO(service.count(cri), cri);
+		
 		log.info("=================================");
 		log.info("total:"+service.count(cri));
 		log.info("start:"+pdto.getStartPage());
 		log.info("end:"+pdto.getEndPage());
+		
 		model.addAttribute("list", service.getList(cri));
 		model.addAttribute("pageMaker",pdto);
 	}
