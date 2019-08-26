@@ -23,7 +23,7 @@ public class SimplyMapper extends EgovAbstractMapper{
 		param.put("table", new TableDTO(table));
 		param.put("col", col);
 		param.put("val", val);
-		log.info(val);
+		logger.info(val);
 		return selectOne("simpleSelect" , param);
 	}
 	

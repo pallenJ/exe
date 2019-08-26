@@ -30,7 +30,6 @@ public class LoginController{
 	
 	@GetMapping("/login.do")
 	public String login() {
-		
 		log.info( "test:"+loginService.test());
 		return "sample/login";
 	}

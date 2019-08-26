@@ -107,7 +107,7 @@ public class SampleDAO extends EgovAbstractDAO {
 	}
 	public String now() {
 		Object message = select("testDAO.testSQL","");
-		log.info(message);
+		//log.info(message);
 		return (String)message;
 	}
 }

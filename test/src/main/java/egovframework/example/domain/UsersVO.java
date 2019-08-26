@@ -10,6 +10,6 @@ public class UsersVO {
 
 	private  String username;
 	private  String Password;
-	private int enabled;
+	private boolean enabled;
 	
 }

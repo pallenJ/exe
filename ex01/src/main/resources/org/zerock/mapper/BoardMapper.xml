@@ -41,7 +41,7 @@
 		SELECT * FROM tbl_board WHERE
 		]]>
 
- 			<include refid="criteria"></include>
+ 			<include refid="criteria"/>
 
  		<![CDATA[bno>0]]>
  		ORDER BY bno DESC
