@@ -19,6 +19,8 @@ import lombok.extern.slf4j.Slf4j;
 @Service
 public class CalServiceImpl implements CalService {
 
+	final String dir = "C:\\prtc\\dat\\";
+	
 	@Override
 	public void test() {
 		// TODO Auto-generated method stub
@@ -29,7 +31,6 @@ public class CalServiceImpl implements CalService {
 	public void fileTest() {
 		// TODO Auto-generated method stub
 		String line;
-		String dir = "C:\\dat\\";
 		try (BufferedReader br = new BufferedReader(new FileReader(dir+"english.dat"));) {
 			while (true) {
 				if ((line = br.readLine()) == null)
@@ -51,7 +52,6 @@ public class CalServiceImpl implements CalService {
 		// TODO Auto-generated method stub
 		Map<String, Double> rs = new HashMap<>();
 		String line;
-		String dir = "C:\\dat\\";
 		try (BufferedReader br = new BufferedReader(new FileReader(dir+sbj+".dat"));) {
 			String key;
 			double value;

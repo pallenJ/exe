@@ -2,20 +2,36 @@ package com.example.asn;
 
 
 
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.Reader;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
 import java.util.TreeSet;
+import java.util.stream.Collector;
 
 import javax.annotation.Resource;
 
+import org.apache.commons.csv.CSVFormat;
+import org.apache.commons.csv.CSVRecord;
+import org.apache.commons.io.input.BOMInputStream;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
+
 
 import com.example.asn.domain.RecordDTO;
 import com.example.asn.service.CalService;
@@ -29,12 +45,29 @@ public class AsnmtApplicationTests {
 	@Resource
 	CalService calService;
 	
+	
+	
 	String [] lectures = {"korean","english","math"};
 	
 	enum lecs{
 		korean, english, math
 	}
 	@Test
+	public void CSVexample() throws IOException {
+		String[] HEADERS = { "name", "record"};
+		
+		  Reader in = new FileReader("C:\\prtc\\csv\\english.csv");
+		  
+		  Iterable<CSVRecord> records = CSVFormat.DEFAULT .withHeader(HEADERS)
+		  .withFirstRecordAsHeader() .parse(in);
+		 
+
+		 
+		 // for (CSVRecord record : records) { log.info(record.toMap().get("name")); }
+		 
+		
+	}
+	//@Test
 	public void contextLoads() {
 		
 	
@@ -66,6 +99,7 @@ public class AsnmtApplicationTests {
 			}
 		}
 		
+			
 		
 	}
 	

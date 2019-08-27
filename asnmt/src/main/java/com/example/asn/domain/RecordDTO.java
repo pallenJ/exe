@@ -1,11 +1,15 @@
 package com.example.asn.domain;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.TreeMap;
+import java.util.TreeSet;
 import java.util.concurrent.ConcurrentHashMap;
 
 import lombok.Getter;
@@ -15,15 +19,19 @@ import lombok.extern.slf4j.Slf4j;
 @Getter
 public class RecordDTO extends ConcurrentHashMap<String, Map<String, Double>> {
 
+	private static final long serialVersionUID = 1L;
+	public static final int D=0, K=1, E=2 , M=3, T = 4, A=5, LT=6, LA=7;
+	public static final String[] keys={"default","korean","english","math","sta_total","sta_average","sta_lec_total","sta_lec_average"};
 	Set<String> lectures;
 	{
 		lectures = new HashSet<>();
-		lectures.add("korean");
-		lectures.add("english");
-		lectures.add("math");
+		lectures.add(keys[K]);
+		lectures.add(keys[E]);
+		lectures.add(keys[M]);
 
 	}
-	private static final long serialVersionUID = 1L;
+	
+	public static final List<String> STD_NAME_LIST = new ArrayList<String>(Arrays.asList(new String[]{"정형돈", "정준하" , "유재석" , "박명수", "하하","지석진" , "김종국", "개리" , "이광수", "송지효"})) ;
 
 	public RecordDTO() {
 		keyRecord = new HashMap<>();
@@ -76,15 +84,28 @@ public class RecordDTO extends ConcurrentHashMap<String, Map<String, Double>> {
 		}
 
 	}
-
+	
+	public List<String> stdSortList(int lec){
+		if(lec == D) return RecordDTO.STD_NAME_LIST;
+		List<String> stdNameList = new ArrayList<>();
+		String lecStr = keys[lec];
+		Map<Double, Set<String>> invRecTable = new TreeMap<>(keyRecord.get(lecStr));
+		for (Iterator<Double> itr = invRecTable.keySet().iterator(); itr.hasNext();) {
+			double recTemp = itr.next(); 
+			stdNameList.addAll(new TreeSet<String>(invRecTable.get(recTemp)));
+		}
+		
+		return stdNameList;
+	}
+	
 	public void setTotal() {
 		Map<String, Double> totalRec = new HashMap<>();
 		Map<String, Double> aveRec = new HashMap<>();
 		Map<String, Double> totalLec = new HashMap<>();
 		Map<String, Double> aveLec = new HashMap<>();
 
+		double stdCnt = RecordDTO.STD_NAME_LIST.size();
 		double lecCnt = lectures.size();
-
 		totalRec = new HashMap<>();
 		double l_total;
 		for (String lecture : lectures) {
@@ -103,16 +124,18 @@ public class RecordDTO extends ConcurrentHashMap<String, Map<String, Double>> {
 
 			}
 			totalLec.put(lecture, l_total);
-			aveLec.put(lecture, l_total / lecCnt);
+			aveLec.put(lecture, l_total / stdCnt);
 
 		}
 
 		Map<Double, Set<String>> totalInv = keyRecord.get("sta_total");
 		Map<Double, Set<String>> avgInv = keyRecord.get("sta_average");
-
+		
+		
+		
 		for (String name : totalRec.keySet()) {
 			double totalRecV = totalRec.get(name);
-			double avgRecV = totalRecV / lecCnt;
+			double avgRecV = totalRecV / stdCnt;
 
 			if (!totalInv.containsKey(totalRecV)) {
 				totalInv.put(totalRecV, new HashSet<>());
@@ -122,19 +145,19 @@ public class RecordDTO extends ConcurrentHashMap<String, Map<String, Double>> {
 			avgInv.get(avgRecV).add(name);
 		}
 
-		if (this.keySet().contains("sta_total")) {
-			this.replace("sta_total", totalRec);
-			this.replace("sta_average", aveRec);
+		if (this.keySet().contains(keys[T])) {
+			this.replace(keys[T], totalRec);
+			this.replace(keys[A], aveRec);
 		} else {
-			this.put("sta_total", totalRec);
-			this.put("sta_average", aveRec);
+			this.put(keys[T], totalRec);
+			this.put(keys[A], aveRec);
 		}
-		if (this.containsKey("sta_lec_total")) {
-			this.replace("sta_lec_total", totalLec);
-			this.replace("sta_lec_average", aveLec);
+		if (this.containsKey(keys[LT])) {
+			this.replace(keys[LT], totalLec);
+			this.replace(keys[LA], aveLec);
 		} else {
-			this.put("sta_lec_total", totalLec);
-			this.put("sta_lec_average", aveLec);
+			this.put(keys[LT], totalLec);
+			this.put(keys[LA], aveLec);
 		}
 
 	}
