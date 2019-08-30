@@ -10,8 +10,9 @@
 <body>
 <%-- <jsp:forward page="/records/record"></jsp:forward> --%>
 <script type="text/javascript">
-
-$(location).attr("href", "/records/record");
+//var url = "/records/record";
+var url = "/records/csvRecord";
+$(location).attr("href", url);
 </script>
 <h1>Home</h1>
 </body>

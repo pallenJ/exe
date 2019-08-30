@@ -54,13 +54,18 @@ public class AsnmtApplicationTests {
 	}
 	@Test
 	public void CSVexample() throws IOException {
-		String[] HEADERS = { "name", "record"};
+		RecordDTO rdto = calService.recordMap();
+		Map<String, Map<Double, Set<String>>> invRec = rdto.getKeyRecord();
+		for (String lec : rdto.getKeyRecord().keySet()) {
+			Set<Double> tmp = new TreeSet<>(invRec.get(lec).keySet());
+			Object []aaa =  tmp.toArray();
+			log.info(lec);
+			for (Object object : aaa) {
+				log.info(object.toString());
+			}
+			log.info("\n");
+		}
 		
-		  Reader in = new FileReader("C:\\prtc\\csv\\english.csv");
-		  
-		  Iterable<CSVRecord> records = CSVFormat.DEFAULT .withHeader(HEADERS)
-		  .withFirstRecordAsHeader() .parse(in);
-		 
 
 		 
 		 // for (CSVRecord record : records) { log.info(record.toMap().get("name")); }

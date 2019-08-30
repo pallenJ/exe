@@ -19,31 +19,33 @@
 				<th>국어
 				<th>영어
 				<th>수학
-				<!-- <th>총합
-				<th>평균   -->
-				<c:forEach items="${stdList}" var="stdName">
+				<th>총합
+				<th>평균  
+				<c:forEach items="${rdto.recordTable}" var="rData">
+				<c:set var="name" value="${rData.get('name')}" />
+
 						<tr>
-							<th>${rData['name']}
-							<td class="korean-rec"><fmt:formatNumber
-									value="${rData['korean']}" pattern="" />
-							<td class="english-rec"><fmt:formatNumber
-									value="${rData['english']}" pattern="" />
-							<td class="math-rec"><fmt:formatNumber
-									value="${rData['math']}" pattern="" />
-							<%-- <td><fmt:formatNumber value="${rData['sta_total'][stdName]}"
+							<th>${name}
+							<td class="korean-rec">${rData.get('korean')}
+							<td class="english-rec">${rData.get('english')}
+							<td class="math-rec">${rData.get('math')}
+							<td><fmt:formatNumber value="${rdto.staMap[name]['total']}"
 									pattern="" />
-							<td><fmt:formatNumber
-									value="${rData['sta_average'][stdName]}" pattern=".00" /> --%>
+							<td><fmt:formatNumber value="${rdto.staMap[name]['average']}"
+									pattern=".00" />
+
 					</c:forEach>
-			<%-- <tr>
+			<tr>
 				<th class="std-name">총합
-				<th id="k-total"><fmt:formatNumber
-						value="${rData['sta_lec_total']['korean']}" pattern="" />
-				<th id="e-total"><fmt:formatNumber
-						value="${rData['sta_lec_total']['english']}" pattern="" />
-				<th id="m-total"><fmt:formatNumber
-						value="${rData['sta_lec_total']['math']}" pattern="" />
-				<th rowspan="2" colspan="2" class="table-info"><select
+				<th id="k-total">
+				<fmt:formatNumber value="${rdto.staMap['lec_total']['korean']}" pattern="" />
+				<th id="e-total">
+				<fmt:formatNumber value="${rdto.staMap['lec_total']['english']}" pattern="" />
+				<th id="m-total">
+				<fmt:formatNumber value="${rdto.staMap['lec_total']['math']}" pattern="" />
+				<th rowspan="2" colspan="2" class="table-info">
+				<div class = "form-inline">
+				<select
 					class="form-control" id="rec-select">
 						<option class="lec-select" value="d" selected>default</option>
 						<option class="lec-select" value="k">korean</option>
@@ -51,14 +53,21 @@
 						<option class="lec-select" value="m">mathematics</option>
 						<option class="lec-select" value="t">total</option>
 				</select>
+				
+				<button type="button" class="btn btn-outline-primary" id = "sort-btn">go</button>
+				</div>
+				<div class="custom-control custom-checkbox">
+				<input type="checkbox" id ="asc-check" name="order" value="ASC" class="custom-control-input"> 
+				<label id = "asc-div" class="custom-control-label">오름차순으로</label>
+				</div>
 			<tr>
 				<th class="std-name">평균
 				<th id="k-avg"><fmt:formatNumber
-						value="${rData['sta_lec_average']['korean']}" pattern=".00" />
+						value="${rdto.staMap['lec_avg']['korean']}" pattern=".00" />
 				<th id="e-avg"><fmt:formatNumber
-						value="${rData['sta_lec_average']['english']}" pattern=".00" />
+						value="${rdto.staMap['lec_avg']['english']}" pattern=".00" />
 				<th id="m-avg"><fmt:formatNumber
-						value="${rData['sta_lec_average']['math']}" pattern=".00" /> --%>
+						value="${rdto.staMap['lec_avg']['math']}" pattern=".00" />
 		</table>
 	</div>
 
@@ -68,15 +77,16 @@
 <script type="text/javascript">
 	$(function() {
 		
-/* 		var param = "${param.srt}";
-		var k_avg = $("#k-avg").text();
-		var e_avg = $("#e-avg").text();
-		var m_avg = $("#m-avg").text();
+ 		var param = "${param.srt}";
 
 		$("#rec-select").val(param)
 		if(param =="" || param == null){
 		$("#rec-select").val("d");
 		}
+		
+		var k_avg = $("#k-avg").text();
+		var e_avg = $("#e-avg").text();
+		var m_avg = $("#m-avg").text();
 		
 		
 		$("td").each(function() {
@@ -103,7 +113,7 @@
 		$("td").click(function() {
 			alert($(this).attr("class"))
 			//alert($(this).text()>53)
-		}) */
+		}) 
 		$("#rec-select").change(function() {
 			var goURL = $(location).attr("pathname")+"?srt="+$(this).val();
 			$(location).attr("href", goURL);

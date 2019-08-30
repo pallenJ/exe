@@ -20,19 +20,26 @@
 				<th>영어
 				<th>수학
 				<th>총합
-				<th>평균 <%-- <tr>
-			<td> ${rData['korean']['정형돈']}
-			 --%> <c:forEach items="${stdList}" var="stdName">
+				<th>평균
+				
+				
+				 <c:forEach items="${stdList}" var="stdName">
 						<tr>
 							<th>${stdName}
-							<td class="korean-rec"><fmt:formatNumber
-									value="${rData['korean'][stdName]}" pattern="" />
-							<td class="english-rec"><fmt:formatNumber
-									value="${rData['english'][stdName]}" pattern="" />
-							<td class="math-rec"><fmt:formatNumber
-									value="${rData['math'][stdName]}" pattern="" />
-							<td><fmt:formatNumber value="${rData['sta_total'][stdName]}"
-									pattern="" />
+							
+							<c:forEach items="${lecList}" var = "l_key">
+							
+							<td class="${l_key}-rec">
+							<fmt:formatNumber value="${rData[l_key][stdName]}" pattern="" />
+							
+							<c:if test="${rData['rc_MAX'][l_key] eq rData[l_key][stdName]}"><label class="btn-primary btn-sm"> + </label></c:if>
+							<c:if test="${rData['rc_MIN'][l_key] eq rData[l_key][stdName]}"><label class="btn-danger btn-sm"> - </label></c:if>
+				<%-- 			
+							<fmt:formatNumber value="${rData['rc_MAX'][l_key]}" pattern="" />,
+							<fmt:formatNumber value="${rData['rc_MIN'][l_key]}" pattern="" /> --%>
+							
+							</c:forEach>
+							
 							<td><fmt:formatNumber
 									value="${rData['sta_average'][stdName]}" pattern=".00" />
 					</c:forEach>
@@ -44,7 +51,9 @@
 						value="${rData['sta_lec_total']['english']}" pattern="" />
 				<th id="m-total"><fmt:formatNumber
 						value="${rData['sta_lec_total']['math']}" pattern="" />
-				<th rowspan="2" colspan="2" class="table-info"><select
+				<th rowspan="2" colspan="2" class="table-info">
+				<div class = "form-inline">
+				<select
 					class="form-control" id="rec-select">
 						<option class="lec-select" value="d" selected>default</option>
 						<option class="lec-select" value="k">korean</option>
@@ -52,6 +61,13 @@
 						<option class="lec-select" value="m">mathematics</option>
 						<option class="lec-select" value="t">total</option>
 				</select>
+				
+				<button type="button" class="btn btn-outline-primary" id = "sort-btn">go</button>
+				</div>
+				<div class="custom-control custom-checkbox">
+				<input type="checkbox" id ="asc-check" name="order" value="ASC" class="custom-control-input"> 
+				<label id = "asc-div" class="custom-control-label">오름차순으로</label>
+				</div>
 			<tr>
 				<th class="std-name">평균
 				<th id="k-avg"><fmt:formatNumber
@@ -79,10 +95,21 @@
 		$("#rec-select").val("d");
 		}
 		
+		if("${param.order}"=="ASC"){
+		$("#asc-check").prop("checked", true)	
+		}
+/* 		$("#asc-check").change(function() {
+		alert($(this).prop("checked"));	
+		$(this).prop("checked", false)	
+		alert($(this).prop("checked"));	
+		})
+		 */
+		
 		
 		$("td").each(function() {
 
 			var rec = $(this).text();
+			rec = rec.replace(/[^0-9]/g,'');
 			var flag = false;
 
 			switch ($(this).attr("class")) {
@@ -101,14 +128,25 @@
 			$(this).attr("class", "table-" + (flag ? "success" : "warning"));
 
 		});
+		
+		//$("#asc-check").prop("checked", false)
+		
 		$("td").click(function() {
-			alert($(this).attr("class"))
-			//alert($(this).text()>53)
+			/* alert($(this).attr("class"));
+			alert($(this).text()); */
 		})
-		$("#rec-select").change(function() {
-			var goURL = $(location).attr("pathname")+"?srt="+$(this).val();
+		$("#asc-div").click(function() {
+			$("#asc-check").prop("checked", !$("#asc-check").prop("checked"));
+		})
+		$("#sort-btn").click(function() {
+			//alert("${param.srt}"=="d")
+			var order = "&order=" + ($("#asc-check").prop("checked")?"ASC":"DESC")
+			var goURL = $(location).attr("pathname")+"?srt="+$("#rec-select").val()+order;
 			$(location).attr("href", goURL);
 		})
+		
+		
+		
 	});
 </script>
 
