@@ -11,7 +11,8 @@
 <%-- <jsp:forward page="/records/record"></jsp:forward> --%>
 <script type="text/javascript">
 //var url = "/records/record";
-var url = "/records/csvRecord";
+//var url = "/records/csvRecord";
+var url = "/records/cusRecord";
 $(location).attr("href", url);
 </script>
 <h1>Home</h1>

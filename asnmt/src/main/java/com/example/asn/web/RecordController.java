@@ -32,9 +32,15 @@ public class RecordController {
 	
 	  @Resource CalCSVService calCSVService;
 	 
-
 	@GetMapping("record")
-	public void record(HttpServletRequest request, Model model) {
+	public void record(Model model) {
+		model.addAttribute("subject", new String[] {"korean", "english" , "math"});
+		model.addAttribute("csvRecord", calCSVService.getCSVList());
+	}
+	
+	  
+	@GetMapping("cusRecord")
+	public void cusRecord(HttpServletRequest request, Model model) {
 
 		String srt;
 		String order;

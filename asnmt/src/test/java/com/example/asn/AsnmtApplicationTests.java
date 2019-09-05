@@ -53,6 +53,20 @@ public class AsnmtApplicationTests {
 		korean, english, math
 	}
 	@Test
+	
+	public void csvEx2() {
+		try (Reader in = new FileReader("C:\\prtc\\csv\\record.csv");){
+			Iterable<CSVRecord> records = CSVFormat.DEFAULT.withHeader(new String[]{""}).withFirstRecordAsHeader().parse(in);
+			
+			for (CSVRecord csvRecord : records) {
+				log.info(csvRecord.get("name"));
+			}
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+		}
+	}
+	
 	public void CSVexample() throws IOException {
 		RecordDTO rdto = calService.recordMap();
 		Map<String, Map<Double, Set<String>>> invRec = rdto.getKeyRecord();
